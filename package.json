@@ -1,0 +1,19 @@
+{
+    "name": "NFD",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Philipp Beck <dertieran@gmail.com>",
+    "license": "MIT",
+    "description": "Nextgen Football Database",
+    "repository": "git@github.com:MartinVogelSRH/SoccerManagement.git",
+    "private": true,
+    "scripts": {
+        "start": "node ."
+    },
+    "dependencies": {
+        "config": "^1.29.2",
+        "got": "^8.0.3",
+        "koa": "^2.4.1",
+        "monk": "^6.0.5"
+    }
+}
