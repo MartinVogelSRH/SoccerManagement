@@ -5,10 +5,10 @@
 const monk = require('monk');
 const config = require('config');
 
-const createServer = require('./src/server');
+//const createServer = require('./src/server');
 
-const connection = config.get('db.connection');
-monk(connection)
+//const connection = config.get('db.connection');
+monk('localhost/football')
     .then(db => {
     	console.log('Connected to db:', db._connectionURI);
     	var insertDocuments = function (db, callback) {
