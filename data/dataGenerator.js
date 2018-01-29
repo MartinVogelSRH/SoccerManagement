@@ -11,6 +11,7 @@ const config = require('config');
 monk('localhost/football')
     .then(db => {
     	console.log('Connected to db:', db._connectionURI);
+    	console.log('Starting to insert data...');
     	var insertDocuments = function (db, callback) {
     		// Get the documents collection
     		var collection = db.collection('documents');
@@ -25,6 +26,7 @@ monk('localhost/football')
     			callback(result);
     		});
     	}
+    	console.log('Data inserted');
     })
     .catch(err => {
     	console.log('Connection to db failed:', err.message);
