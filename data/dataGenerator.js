@@ -27,7 +27,7 @@ var insertDocuments = function (db, callback) {
 	// Get the documents collection
 	var collection = db.collection('documents');
 	// Insert some documents
-	collection.insertMany([
+	collection.insert([
 	  { a: 1 }, { a: 2 }, { a: 3 }
 	], function (err, result) {
 		assert.equal(err, null);
