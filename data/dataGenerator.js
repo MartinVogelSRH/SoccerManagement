@@ -12,20 +12,9 @@ monk('localhost/football')
     .then(db => {
     	console.log('Connected to db:', db._connectionURI);
     	console.log('Starting to insert data...');
-    	var insertDocuments = function (db, callback) {
-    		// Get the documents collection
-    		var collection = db.collection('documents');
-    		// Insert some documents
-    		collection.insertMany([
-			  { a: 1 }, { a: 2 }, { a: 3 }
-    		], function (err, result) {
-    			assert.equal(err, null);
-    			assert.equal(3, result.result.n);
-    			assert.equal(3, result.ops.length);
-    			console.log("Inserted 3 documents into the collection");
-    			callback(result);
-    		});
-    	}
+    	insertDocuments(db, function () {
+    		db.close();
+    	});
     	console.log('Data inserted');
     })
     .catch(err => {
@@ -34,3 +23,17 @@ monk('localhost/football')
     });
 
 
+var insertDocuments = function (db, callback) {
+	// Get the documents collection
+	var collection = db.collection('documents');
+	// Insert some documents
+	collection.insertMany([
+	  { a: 1 }, { a: 2 }, { a: 3 }
+	], function (err, result) {
+		assert.equal(err, null);
+		assert.equal(3, result.result.n);
+		assert.equal(3, result.ops.length);
+		console.log("Inserted 3 documents into the collection");
+		callback(result);
+	});
+}
