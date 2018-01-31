@@ -1,19 +1,16 @@
 {
-    "name": "NFD",
+    "name": "football-data-generator",
     "version": "1.0.0",
-    "main": "index.js",
+    "description": "Generate football data for our football database manager",
     "author": "Philipp Beck <dertieran@gmail.com>",
     "license": "MIT",
-    "description": "Nextgen Football Database",
-    "repository": "git@github.com:MartinVogelSRH/SoccerManagement.git",
     "private": true,
-    "scripts": {
-        "start": "node ."
-    },
     "dependencies": {
         "config": "^1.29.2",
         "got": "^8.0.3",
-        "koa": "^2.4.1",
-        "monk": "^6.0.5"
+        "lodash": "^4.17.4",
+        "moment": "^2.20.1",
+        "monk": "^6.0.5",
+        "p-auto": "^1.1.0"
     }
 }

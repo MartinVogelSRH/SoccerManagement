@@ -1,12 +1,14 @@
-# Nextgen Football Database
+# Football Data Generator
 
-## Development
+> Generate football data for our football database manager
 
-You need to have `nodejs` and `mongodb` installed
+## Setup
+This project uses `nodejs` to generate data.
+After cloning install the dependencies using `npm` or `yarn`.
 
-Then run
+### Configuration
+This project uses `config` to manage configurations.
+To configure your local environment, duplicate the `config/default.js` to `config/local.js` and modify the data as needed.
 
-```sh
-$ npm install
-$ npm start
-```
+## What it does
+**TODO**: Add nice text here, but for now you need to read the code (sorry)

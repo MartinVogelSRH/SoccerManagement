@@ -1,8 +1,9 @@
 module.exports = {
-    db: {
-        connection: 'localhost/football',
+    databases: {
+        fantasy: 'localhost/fantasy-data',
+        football: 'localhost/football-data',
     },
-    server: {
-        port: 3000,
+    fantasy: {
+        subscriptionKeys: [],
     },
 };
