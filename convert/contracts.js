@@ -34,11 +34,6 @@ const buildContract = (mappings, fantasy) => {
     return contract;
 };
 
-const buildMap = (fantasyId, objectId) => {
-    const type = 'membership';
-    return { type, fantasyId, objectId };
-};
-
 const reducer = mappings => (result, fantasy) => {
     const contract = buildContract(mappings, fantasy);
     if (!contract) {
@@ -46,7 +41,7 @@ const reducer = mappings => (result, fantasy) => {
     }
     result.contracts.push(contract);
 
-    const mapping = buildMap(fantasy.MembershipId, contract._id);
+    const mapping = MappingService.build('membership', fantasy.MembershipId, contract._id);
     result.mappings.push(mapping);
 
     return result;

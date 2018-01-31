@@ -43,6 +43,6 @@ const people = () => {
     return collection.find({}).then(updater(collection, ['birthday']));
 };
 
-Promise.all([get()])
+Promise.all([])
     .catch(console.error)
     .then(exit, exit);

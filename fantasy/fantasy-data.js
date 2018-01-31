@@ -33,7 +33,7 @@ const Fantasy = opt => {
                     subscription.keys[key] = false;
                     return api(type, endpoint, opt);
                 }
-                return Promise.reject(e);
+                return Promise.reject(err);
             });
     };
 
@@ -45,20 +45,20 @@ const Fantasy = opt => {
     const activeMemberships = () => api('stats', 'ActiveMemberships');
     const historicalMemberships = () => api('stats', 'HistoricalMemberships');
 
-    const schedule = roundId => api('stats', 'Schedule/' + roundId);
-    const standings = roundId => api('stats', 'Standings/' + roundId);
+    const schedule = roundId => api('stats', `Schedule/${roundId}`);
+    const standings = roundId => api('stats', `Standings/${roundId}`);
     const teamSeasonStats = roundId =>
-        api('stats', 'TeamSeasonStats/' + roundId);
+        api('stats', `TeamSeasonStats/${roundId}`);
     const playerSeasonStats = roundId =>
-        api('stats', 'PlayerSeasonStats/' + roundId);
+        api('stats', `PlayerSeasonStats/${roundId}`);
 
-    const boxScores = date => api('stats', 'BoxScores/' + date);
-    const teamGameStatsByDate = date =>
-        api('stats', 'TeamGameStatsByDate/' + date);
-    const playerGameStatsByDate = date =>
-        api('stats', 'PlayerGameStatsByDate/' + date);
-    const playerGameProjectionStatsByDate = date =>
-        api('projections', 'PlayerGameProjectionStatsByDate/' + date);
+    const boxScores = day => api('stats', `BoxScores/${day}`);
+    const teamGameStatsByDate = day =>
+        api('stats', `TeamGameStatsByDate/${day}`);
+    const playerGameStatsByDate = day =>
+        api('stats', `PlayerGameStatsByDate/${day}`);
+    const playerGameProjectionStatsByDate = day =>
+        api('projections', `PlayerGameProjectionStatsByDate/${day}`);
 
     return {
         teams,

@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const monk = require('monk');
+const moment = require('moment');
 const config = require('config');
 
 const MappingService = require('./mappings');
@@ -20,8 +21,8 @@ const buildPlayer = fantasy => {
     const type = 'player';
 
     // NOTE: There was one player without a first name so just to be sure
-    let firstName = fantasy.FirstName || _.split(fantasy.CommonName, ' ')[0];
-    let lastName = fantasy.LastName;
+    const firstName = fantasy.FirstName || _.split(fantasy.CommonName, ' ')[0];
+    const lastName = fantasy.LastName;
 
     const birthday = buildDate(fantasy.BirthDate);
     const nationality = fantasy.Nationality;

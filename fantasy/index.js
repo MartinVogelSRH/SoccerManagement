@@ -3,9 +3,10 @@
 const _ = require('lodash');
 const monk = require('monk');
 const auto = require('p-auto');
+const moment = require('moment');
 const config = require('config');
 
-const FantasyData = require('./fantasyData-data');
+const FantasyData = require('./fantasy-data');
 
 const series = (collection, iteratee) =>
     _.reduce(
@@ -15,7 +16,9 @@ const series = (collection, iteratee) =>
     );
 
 const batched = (collection, size, iteratee) =>
-    series(_.chunk(r.dates, 10), chunk => Promise.all(_.map(chunk, iteratee)));
+    series(_.chunk(collection, 10), chunk =>
+        Promise.all(_.map(chunk, iteratee))
+    );
 
 const basic = (db, fantasyData) =>
     auto({
@@ -115,28 +118,28 @@ const rounded = (db, fantasyData) =>
 
 const dated = (db, fantasyData) =>
     auto({
-        dates: () =>
+        days: () =>
             db
                 .get('schedule')
                 .distinct('Day')
-                .then(days =>
-                    _.chain(days)
+                .then(days => {
+                    const today = moment();
+                    return _.chain(days)
+                        .map(day => moment(_.replace(day, /T.*$/, '')))
+                        .filter(day => day.isSameOrBefore(today, 'day'))
+                        .map(date => date.format('YYYY-MM-DD'))
                         .sortBy()
-                        .filter(days => {
-                            const today = new Date().toISOString();
-                            return _.filter(days, day => day <= today);
-                        })
-                        .map(day => _.replace(day, /T.*$/, ''))
-                        .value()
-                ),
+                        .value();
+                }),
         boxScores: [
-            'dates',
+            'days',
             r => {
                 const collection = db.get('boxScores');
-                return batched(r.dates, 10, date =>
+                return batched(r.days, 10, day =>
                     fantasyData
-                        .boxScores(date)
+                        .boxScores(day)
                         .then(data => collection.insert(data))
+                        .catch(err => console.log(day, `Error:`, err.message))
                 );
             },
         ],
@@ -145,7 +148,10 @@ const dated = (db, fantasyData) =>
 const uri = config.get('databases.fantasy');
 monk(uri).then(db => {
     console.log('Conneced to', uri);
-    const subscriptionKeys = config.get('fantasyData.subscriptionKeys');
+    const subscriptionKeys = config.get('fantasy.subscriptionKeys');
     const fantasyData = FantasyData({ subscriptionKeys });
     /* run one of the tasks above here, e.g. basic(db, fantasyData) */
+    return dated(db, fantasyData)
+        .catch(console.error)
+        .then(() => db.close());
 });
