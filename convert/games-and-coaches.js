@@ -164,9 +164,9 @@ dumpDB
     .each((box, { close, pause, resume }) => {
         pause();
         counter += 1;
-        spinner.text = `#${counter}/12077`;
+        spinner.text = `#${counter}`;
         return run(box).then(() => resume());
     })
-    .then(console.log)
-    .catch(console.error)
+    .then(() => spinner.succeed(`Finished #${counter}`))
+    .catch(err => spinner.fail(err))
     .then(exit, exit);
