@@ -45,6 +45,8 @@ const Fantasy = opt => {
     const activeMemberships = () => api('stats', 'ActiveMemberships');
     const historicalMemberships = () => api('stats', 'HistoricalMemberships');
 
+    const seasonTeams = seasonId => api('stats', `SeasonTeams/${seasonId}`);
+
     const schedule = roundId => api('stats', `Schedule/${roundId}`);
     const standings = roundId => api('stats', `Standings/${roundId}`);
     const teamSeasonStats = roundId =>
@@ -68,6 +70,7 @@ const Fantasy = opt => {
         competitionHierarchy,
         activeMemberships,
         historicalMemberships,
+        seasonTeams,
         schedule,
         standings,
         teamSeasonStats,
