@@ -126,7 +126,7 @@ const run = box =>
             ({ teams, competition }) => {
                 const competitionId = competition[box.Game.RoundId];
                 const awayTeamId = teams[box.Game.AwayTeamId];
-                const homeTeamId = teams[box.Game.AwayTeamId];
+                const homeTeamId = teams[box.Game.HomeTeamId];
                 if (!competitionId || !awayTeamId || !homeTeamId) {
                     return Promise.resolve();
                 }
