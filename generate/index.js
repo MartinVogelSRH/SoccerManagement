@@ -142,10 +142,24 @@ const generatePlayers = fantasyPlayers => {
         return null;
     }
 
-    return dbs.football
-        .get('people')
-        .insert(players)
-        .then(() => players.ids);
+    const marketvalues = _.flatMap(players, player => {
+        const type = 'marketvalue';
+        const playerId = player._id;
+        return _.times(3, i => {
+            const value = _.random(10, 100) * 1000000;
+            const date = moment
+                .utc()
+                .startOf('year')
+                .year(i + 1)
+                .toDate();
+            return { type, playerId, value, date };
+        });
+    });
+
+    return Promise.all([
+        dbs.football.get('people').insert(players),
+        dbs.football.get('people').insert(marketvalues),
+    ]).then(() => players.ids);
 };
 
 const generateContracts = fantasyMemberships => {
@@ -158,13 +172,21 @@ const generateContracts = fantasyMemberships => {
         .then(() => {
             const contracts = _.map(fantasyMemberships, fantasy => {
                 const type = 'contract';
+                const contractType = 'player';
                 const teamId = cache.get('teams', fantasy.TeamId);
                 const playerId = cache.get('players', fantasy.PlayerId);
 
                 const salary = _.random(1, 70) * 1000000;
                 const startDate = parser.date(fantasy.StartDate);
 
-                const contract = { type, teamId, playerId, salary, startDate };
+                const contract = {
+                    type,
+                    contractType,
+                    teamId,
+                    playerId,
+                    salary,
+                    startDate,
+                };
                 if (fantasy.EndDate) {
                     contract.endDate = parser.date(fantasy.EndDate);
                 }
@@ -318,11 +340,18 @@ const generateStatistics = fantasyBoxScores => {
     const stats = _.flatMap(fantasyBoxScores, fantasyBoxScore => {
         const gameId = cache.get('games', fantasyBoxScore.Game.GameId);
 
-        const teamStats = _.map(fantasyBoxScore.TeamGames, fantasy => {
+        const possessions = [];
+        possessions[0] = _.random(50, 70);
+        possessions[1] = 100 - possessions[0];
+        const teamStats = _.map(fantasyBoxScore.TeamGames, (fantasy, i) => {
             const teamId = cache.get('teams', fantasy.TeamId);
 
             const stats = parser.stats(fantasy);
-            return _.assign({ type, gameId, teamId, fantasy }, stats);
+            const possession = possessions[i];
+            return _.assign(
+                { type, gameId, teamId, possession, fantasy },
+                stats
+            );
         });
 
         const playerStats = _.map(fantasyBoxScore.PlayerGames, fantasy => {
@@ -357,6 +386,37 @@ const generateStatistics = fantasyBoxScores => {
     }
 
     return dbs.football.get('statistics').insert(stats);
+};
+
+const generateManOfMatch = fantasyBoxScores => {
+    const type = 'award';
+    const awards = _.map(fantasyBoxScores, fantasyBoxScore => {
+        let winningTeam = fantasyBoxScore.Game.HomeTeamId;
+        if (
+            fantasyBoxScore.Game.AwayTeamScore >
+            fantasyBoxScore.Game.HomeTeamScore
+        ) {
+            winningTeam = fantasyBoxScore.Game.AwayTeamId;
+        }
+
+        const player = _.chain(fantasyBoxScore.Lineups)
+            .filter({ TeamId: winningTeam, Type: 'Starter' })
+            .sample()
+            .value();
+
+        const awardType = 'ManOfTheMatchAward';
+        const gameId = cache.get('games', fantasyBoxScore.Game.GameId);
+        const playerId = cache.get('players', player.PlayerId);
+
+        return { type, awardType, playerId, gameId };
+    });
+
+    spinner.info(`Adding ${_.size(awards)} awards`);
+    if (_.isEmpty(awards)) {
+        return null;
+    }
+
+    return dbs.football.get('people').insert(awards);
 };
 
 const generateSeason = fantasy => {
@@ -453,6 +513,11 @@ const generateSeason = fantasy => {
             'fantasyBoxScores',
             'game',
             ({ fantasyBoxScores }) => generateStatistics(fantasyBoxScores),
+        ],
+        manOfMatch: [
+            'fantasyBoxScores',
+            'game',
+            ({ fantasyBoxScores }) => generateManOfMatch(fantasyBoxScores),
         ],
     });
     return Promise.resolve(tasks);
