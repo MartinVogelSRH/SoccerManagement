@@ -79,7 +79,7 @@ const generateTeams = fantasyTeams => {
             const name = fantasy.Name;
             const country = fantasy.AreaName;
 
-            const team = { type, name, country, fantasy };
+            const team = { _id, type, name, country, fantasy };
             if (type === 'Club') {
                 team.city = fantasy.City;
             }
@@ -330,6 +330,8 @@ const generateStatistics = fantasyBoxScores => {
             const playerId = cache.get('players', fantasy.PlayerId);
 
             const stats = parser.stats(fantasy);
+            const position = fantasy.Position;
+            const started = fantasy.Started > 0;
             const minutes = _.round(fantasy.Minutes);
             return _.assign(
                 {
@@ -337,6 +339,8 @@ const generateStatistics = fantasyBoxScores => {
                     gameId,
                     teamId,
                     playerId,
+                    position,
+                    started,
                     minutes,
                     fantasy,
                 },
@@ -394,7 +398,7 @@ const generateSeason = fantasy => {
         ],
         competition: [
             'teams',
-            results => {
+            ({ teams }) => {
                 const _id = monk.id();
                 cache.set('seasons', fantasy.season.SeasonId, _id);
                 _.forEach(fantasy.season.Rounds, round => {
@@ -410,8 +414,6 @@ const generateSeason = fantasy => {
 
                 const startDate = parser.date(fantasy.season.StartDate);
                 const endDate = parser.date(fantasy.season.EndDate);
-
-                const teams = _.map(results.teams, '_id');
 
                 spinner.info(
                     `Adding competition for ${_.size(
