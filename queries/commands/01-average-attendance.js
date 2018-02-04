@@ -14,13 +14,13 @@ module.exports = {
                                 {
                                     $eq: [
                                         '$awayTeamId',
-                                        ObjectId('5a71931a697c49295702bed1'),
+                                        ObjectId('5a76e6133d9ea10b4b03af19'),
                                     ],
                                 },
                                 {
                                     $eq: [
                                         '$homeTeamId',
-                                        ObjectId('5a71931a697c49295702bed1'),
+                                        ObjectId('5a76e6133d9ea10b4b03af19'),
                                     ],
                                 },
                             ],
@@ -28,13 +28,13 @@ module.exports = {
                         {
                             $gte: [
                                 '$startDate',
-                                ISODate('2015-06-13 00:00:00.000'),
+                                ISODate('2016-08-14 02:00:00.000'),
                             ],
                         },
                         {
                             $lte: [
                                 '$startDate',
-                                ISODate('2016-06-13 00:00:00.000'),
+                                ISODate('2017-05-29 02:00:00.000'),
                             ],
                         },
                     ],

@@ -27,12 +27,14 @@ module.exports = {
         ],
         "block-scoped-var": "error",
         "block-spacing": "error",
-        "brace-style": [
-            "error",
-            "1tbs"
-        ],
+        "brace-style": "error",
         "callback-return": "error",
-        "camelcase": "error",
+        "camelcase": [
+            "error",
+            {
+                "properties": "never"
+            }
+        ],
         "capitalized-comments": "off",
         "class-methods-use-this": "error",
         "comma-dangle": "off",
@@ -79,7 +81,7 @@ module.exports = {
         "function-paren-newline": "off",
         "generator-star-spacing": "error",
         "getter-return": "error",
-        "global-require": "error",
+        "global-require": "off",
         "guard-for-in": "error",
         "handle-callback-err": "error",
         "id-blacklist": "error",
@@ -91,13 +93,7 @@ module.exports = {
         "init-declarations": "error",
         "jsx-quotes": "error",
         "key-spacing": "error",
-        "keyword-spacing": [
-            "error",
-            {
-                "after": true,
-                "before": true
-            }
-        ],
+        "keyword-spacing": "error",
         "line-comment-position": "error",
         "linebreak-style": [
             "error",
@@ -117,7 +113,10 @@ module.exports = {
             "error",
             "separate-lines"
         ],
-        "multiline-ternary": "error",
+        "multiline-ternary": [
+            "error",
+            "always-multiline"
+        ],
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-before-return": "off",
@@ -220,6 +219,12 @@ module.exports = {
             "error",
             "always"
         ],
+        "object-property-newline": [
+            "error",
+            {
+                "allowMultiplePropertiesPerLine": true
+            }
+        ],
         "object-shorthand": "error",
         "one-var": "off",
         "one-var-declaration-per-line": "error",
@@ -243,10 +248,7 @@ module.exports = {
         "prefer-spread": "error",
         "prefer-template": "error",
         "quote-props": "off",
-        "quotes": [
-            "error",
-            "single"
-        ],
+        "quotes": "off",
         "radix": "error",
         "require-await": "error",
         "require-jsdoc": "error",
