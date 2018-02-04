@@ -44,14 +44,14 @@ module.exports = {
                             },
                         },
                     },
-                    { $count: 'goals' },
                 ],
-                as: 'result',
+                as: 'goals',
             },
         },
+        { $group: { _id: '$_id', goals: { $sum: 1 } } },
         {
             $sort: {
-                'result.goals': -1,
+                goals: -1,
             },
         },
         {
