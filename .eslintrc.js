@@ -27,7 +27,10 @@ module.exports = {
         ],
         "block-scoped-var": "error",
         "block-spacing": "error",
-        "brace-style": "error",
+        "brace-style": [
+            "error",
+            "1tbs"
+        ],
         "callback-return": "error",
         "camelcase": "error",
         "capitalized-comments": "off",
@@ -83,12 +86,18 @@ module.exports = {
         "id-length": "off",
         "id-match": "error",
         "implicit-arrow-linebreak": "off",
-        "indent": "error",
+        "indent": "off",
         "indent-legacy": "error",
         "init-declarations": "error",
         "jsx-quotes": "error",
         "key-spacing": "error",
-        "keyword-spacing": "error",
+        "keyword-spacing": [
+            "error",
+            {
+                "after": true,
+                "before": true
+            }
+        ],
         "line-comment-position": "error",
         "linebreak-style": [
             "error",
@@ -109,7 +118,6 @@ module.exports = {
             "separate-lines"
         ],
         "multiline-ternary": "error",
-        "new-cap": "error",
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-before-return": "off",
@@ -185,7 +193,7 @@ module.exports = {
         "no-sync": "error",
         "no-tabs": "error",
         "no-template-curly-in-string": "error",
-        "no-ternary": "error",
+        "no-ternary": "off",
         "no-throw-literal": "error",
         "no-trailing-spaces": "error",
         "no-undef-init": "error",
@@ -207,16 +215,10 @@ module.exports = {
         "no-whitespace-before-property": "error",
         "no-with": "error",
         "nonblock-statement-body-position": "error",
-        "object-curly-newline": "error",
+        "object-curly-newline": "off",
         "object-curly-spacing": [
             "error",
             "always"
-        ],
-        "object-property-newline": [
-            "error",
-            {
-                "allowMultiplePropertiesPerLine": true
-            }
         ],
         "object-shorthand": "error",
         "one-var": "off",
@@ -225,7 +227,10 @@ module.exports = {
             "error",
             "always"
         ],
-        "operator-linebreak": "error",
+        "operator-linebreak": [
+            "error",
+            null
+        ],
         "padded-blocks": "off",
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "error",
@@ -267,7 +272,7 @@ module.exports = {
             "error",
             "always"
         ],
-        "strict": "error",
+        "strict": "off",
         "switch-colon-spacing": "error",
         "symbol-description": "error",
         "template-curly-spacing": [

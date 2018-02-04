@@ -4,17 +4,16 @@ const _ = require('lodash');
 const faker = require('faker');
 const moment = require('moment');
 
-
 const awards = ['Man of the match', 'Manager of the month'];
 const fakeAward = defaults => {
     const award = _.sample(awards);
-    const date = moment.utc()
+    const date = moment
+        .utc()
         .subtract(_.random(365), 'days')
         .toDate();
 
     return _.assign({ award, date }, defaults);
 };
-
 
 const competitionTypes = ['league', 'tournament'];
 const fakeCompetition = defaults => {
@@ -26,16 +25,23 @@ const fakeCompetition = defaults => {
 
     const country = faker.address.country();
 
-    const startDate = moment.utc()
+    const startDate = moment
+        .utc()
         .subtract(_.random(365), 'days')
         .year(year)
         .toDate();
 
-    return _.assign({ type, season, country, startDate }, defaults);
+    return _.assign({ type, name, season, country, startDate }, defaults);
 };
 
-
-const descriptions = ['Goal', 'Penalty Goal', 'Own Goal', 'Yellow Card', 'Yellow Red Card', 'Red Card'];
+const descriptions = [
+    'Goal',
+    'Penalty Goal',
+    'Own Goal',
+    'Yellow Card',
+    'Yellow Red Card',
+    'Red Card',
+];
 const fakeEvent = defaults => {
     const type = 'event';
 
@@ -46,10 +52,12 @@ const fakeEvent = defaults => {
 };
 
 const fakeContract = defaults => {
-    const startDate = moment.utc()
+    const startDate = moment
+        .utc()
         .subtract(_.random(365), 'days')
         .toDate();
-    const endDate = moment.utc(startDate)
+    const endDate = moment
+        .utc(startDate)
         .add(_.random(365), 'days')
         .toDate();
 
@@ -57,22 +65,23 @@ const fakeContract = defaults => {
     return _.assign({ startDate, endDate, salary }, defaults);
 };
 
-
 const fakeGame = defaults => {
-    const startDate = moment.utc()
+    const startDate = moment
+        .utc()
         .subtract(_.random(365), 'days')
         .toDate();
 
-    const endDate = moment.utc(startDate)
+    const endDate = moment
+        .utc(startDate)
         .add(_.random(105, 115), 'minutes')
         .toDate();
 
     return _.assign({ startDate, endDate }, defaults);
 };
 
-
 const fakeMarketValue = defaults => {
-    const date = moment.utc()
+    const date = moment
+        .utc()
         .subtract(_.random(365), 'days')
         .toDate();
 
@@ -80,7 +89,6 @@ const fakeMarketValue = defaults => {
 
     return _.assign({ date, value }, defaults);
 };
-
 
 const male = 0;
 const jobs = ['player', 'manager', 'coach'];
@@ -90,12 +98,16 @@ const fakePerson = defaults => {
     const lastName = faker.name.lastName(male);
 
     const nationality = faker.address.country();
-    const birthday = moment.utc()
+    const birthday = moment
+        .utc()
         .subtract(20, 'years')
         .subtract(_.random(365), 'weeks')
         .toDate();
 
-    return _.assign({ job, firstName, lastName, nationality, birthday }, defaults);
+    return _.assign(
+        { job, firstName, lastName, nationality, birthday },
+        defaults
+    );
 };
 const fakePlayer = defaults => {
     const job = 'player';
@@ -116,7 +128,6 @@ const fakeCoach = defaults => {
     return _.assign(person, { job });
 };
 
-
 const positions = ['M', 'A', 'D', 'GK'];
 const fakeStatistic = defaults => {
     const type = 'statistic';
@@ -134,9 +145,23 @@ const fakeStatistic = defaults => {
 
     const averageSpeed = _.random(10, 30);
 
-    return _.assign({ type, position, minutes, goalAttempts, offsides, duels, passes, completedPasses, runningDistance, sprintDistance, averageSpeed }, defaults);
+    return _.assign(
+        {
+            type,
+            position,
+            minutes,
+            goalAttempts,
+            offsides,
+            duels,
+            passes,
+            completedPasses,
+            runningDistance,
+            sprintDistance,
+            averageSpeed,
+        },
+        defaults
+    );
 };
-
 
 const teamTypes = ['club', 'national'];
 const fakeTeam = defaults => {
@@ -152,7 +177,6 @@ const fakeTeam = defaults => {
 
     return _.assign(fake, defaults);
 };
-
 
 module.exports = {
     fakeAward,
