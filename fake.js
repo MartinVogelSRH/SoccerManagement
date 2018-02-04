@@ -11,6 +11,7 @@ const Promise = require('bluebird');
 const ora = require('ora');
 
 const db = monk(config.get('databases.football'));
+
 const fakePerson = () => {
     const _id = monk.id();
     const firstName = faker.name.firstName(0);

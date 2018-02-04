@@ -12,7 +12,7 @@ const db = mongojs('football-database');
 const run = command =>
     Promise.fromCallback(callback => db.runCommand(command, callback));
 
-Promise.resolve(commands)
+Promise.resolve([_.nth(commands, 15)])
     .mapSeries(({ description, command }, index) => {
         const info = `Command #${index + 1}:`;
         if (_.isEmpty(command)) {
