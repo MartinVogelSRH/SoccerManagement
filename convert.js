@@ -180,16 +180,14 @@ const ContractsConverter = Memberships => {
         (playerMemberships, PlayerId) => {
             const playerId = PlayerCache.get(PlayerId);
 
-            const dates = {
-                start: moment.utc(),
-            };
-
+            let years = [];
             const contracts = _.map(playerMemberships, fantasy => {
                 const contract = { playerId };
                 contract.type = 'contract';
                 contract.contractType = 'player';
                 contract.teamId = TeamCache.get(fantasy.TeamId);
                 contract.salary = _.random(1, 70) * 1000000;
+
                 contract.startDate = fantasy.StartDate
                     ? parser.date(fantasy.StartDate)
                     : moment
@@ -199,37 +197,35 @@ const ContractsConverter = Memberships => {
                           .startOf('day')
                           .toDate();
 
-                if (fantasy.Active === false) {
-                    contract.endDate = fantasy.EndDate
-                        ? parser.date(fantasy.EndDate)
-                        : moment
-                              .utc(contract.startDate)
-                              .add(_.random(1, 5), 'year')
-                              .dayOfYear(_.random(1, 365))
-                              .startOf('day')
-                              .toDate();
-                }
+                contract.endDate = fantasy.EndDate
+                    ? parser.date(fantasy.EndDate)
+                    : moment
+                          .utc(fantasy.Active ? new Date() : contract.startDate)
+                          .add(_.random(1, 5), 'year')
+                          .dayOfYear(_.random(1, 365))
+                          .startOf('day')
+                          .toDate();
 
-                if (fantasy.Active) {
-                    dates.end = moment.utc();
-                } else if (!dates.end || dates.end.isBefore(contract.endDate)) {
-                    dates.end = moment.utc(contract.endDate);
-                }
+                years = _.union(years, [
+                    contract.startDate.getFullYear(),
+                    contract.endDate.getFullYear(),
+                ]);
 
                 return contract;
             });
 
             let last = _.random(10, 100);
-            const diff = dates.end.year() - dates.start.year();
-            const marketvalues = _.times(diff + 1, i => {
+            const marketvalues = _.map(years, year => {
                 const type = 'marketvalue';
+
                 last = _.random(last - _.random(2), last + _.random(3));
                 const value = last * 1000000;
                 const date = moment
-                    .utc(dates.start)
+                    .utc()
+                    .year(year)
                     .startOf('year')
-                    .add(i, 'year')
                     .toDate();
+
                 return { type, playerId, value, date };
             });
 
@@ -343,22 +339,47 @@ const GamesConverter = BoxScores => {
                 return _.assign(statistic, parser.stats(fantasy));
             });
         },
-        playerStatistics: (game, PlayerGames) =>
-            _.map(PlayerGames, fantasy => {
+        playerStatistics: (game, PlayerGames) => {
+            const positions = {
+                GK: ['Goalkeeper'],
+                D: [
+                    'Centre Back',
+                    'Left Back',
+                    'Right Back',
+                    'Left Wing Back',
+                    'Right Wing Back',
+                ],
+                M: [
+                    'Defensive Midfield',
+                    'Central Midfield',
+                    'Attacking Midfield',
+                    'Left Wing',
+                    'Right Wing',
+                    'Left Midfield',
+                ],
+                A: ['Centre Forward', 'Withdrawn Striker'],
+            };
+
+            return _.map(PlayerGames, fantasy => {
                 const statistic = {};
                 statistic.type = 'statistic';
                 statistic.gameId = game._id;
                 statistic.teamId = TeamCache.get(fantasy.TeamId);
                 statistic.playerId = PlayerCache.get(fantasy.PlayerId);
 
-                statistic.position = fantasy.Position;
                 statistic.started = fantasy.Started > 0;
                 statistic.minutes = _.round(fantasy.Minutes);
+                if (statistic.minutes <= 0) {
+                    return statistic;
+                }
+
                 if (statistic.minutes > game.gameTime) {
                     statistic.minutes = game.gameTime;
                 }
+                statistic.position = _.sample(positions[fantasy.Position]);
                 return _.assign(statistic, parser.stats(fantasy));
-            }),
+            });
+        },
         award: (gameId, Game, Lineups) => {
             let winningTeam = Game.HomeTeamId;
             if (Game.AwayTeamScore > Game.HomeTeamScore) {
