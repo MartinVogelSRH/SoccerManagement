@@ -7,8 +7,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: '1. FC Köln',
-            },
+                name: '1. FC Köln'
+            }
         },
         {
             $lookup: {
@@ -22,39 +22,39 @@ module.exports = {
                                     {
                                         $or: [
                                             {
-                                                $eq: ['$awayTeamId', '$$team'],
+                                                $eq: ['$awayTeamId', '$$team']
                                             },
                                             {
-                                                $eq: ['$homeTeamId', '$$team'],
-                                            },
-                                        ],
+                                                $eq: ['$homeTeamId', '$$team']
+                                            }
+                                        ]
                                     },
                                     {
                                         $gte: [
                                             '$startDate',
-                                            ISODate('2015-06-13 00:00:00.000'),
-                                        ],
+                                            ISODate('2015-06-13 00:00:00.000')
+                                        ]
                                     },
                                     {
                                         $lte: [
                                             '$startDate',
-                                            ISODate('2016-06-13 00:00:00.000'),
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            ISODate('2016-06-13 00:00:00.000')
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
                             _id: 1,
                             team: '$$team',
-                            name: '$$name',
-                        },
-                    },
+                            name: '$$name'
+                        }
+                    }
                 ],
-                as: 'Games',
-            },
+                as: 'Games'
+            }
         },
         { $unwind: '$Games' },
         { $replaceRoot: { newRoot: '$Games' } },
@@ -70,59 +70,56 @@ module.exports = {
                                     {
                                         $and: [
                                             {
-                                                $eq: ['$gameId', '$$event'],
+                                                $eq: ['$gameId', '$$event']
                                             },
                                             {
-                                                $eq: ['$teamId', '$$team'],
+                                                $eq: ['$teamId', '$$team']
                                             },
                                             {
-                                                $eq: [
-                                                    '$description',
-                                                    'OwnGoal',
-                                                ],
-                                            },
-                                        ],
+                                                $eq: ['$description', 'OwnGoal']
+                                            }
+                                        ]
                                     },
                                     {
                                         $and: [
                                             {
-                                                $eq: ['$gameId', '$$event'],
+                                                $eq: ['$gameId', '$$event']
                                             },
                                             {
-                                                $ne: ['$teamId', '$$team'],
+                                                $ne: ['$teamId', '$$team']
                                             },
                                             {
-                                                $eq: ['$description', 'Goal'],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                                $eq: ['$description', 'Goal']
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
                             _id: 1,
                             team: '$$team',
-                            name: '$$name',
-                        },
-                    },
+                            name: '$$name'
+                        }
+                    }
                 ],
-                as: 'events',
-            },
+                as: 'events'
+            }
         },
         {
             $match: {
                 $expr: {
-                    $eq: ['$events', []],
-                },
-            },
+                    $eq: ['$events', []]
+                }
+            }
         },
         {
-            $group: { _id: { name: '$name' }, count: { $sum: 1 } },
-        },
+            $group: { _id: { name: '$name' }, count: { $sum: 1 } }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

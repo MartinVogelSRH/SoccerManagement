@@ -8,8 +8,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Ralf',
-                lastName: 'Fährmann',
-            },
+                lastName: 'Fährmann'
+            }
         },
         {
             $lookup: {
@@ -21,19 +21,19 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     { $eq: ['$type', 'event'] },
-                                    { $eq: ['$playerId', '$$playerId'] },
-                                ],
-                            },
-                        },
+                                    { $eq: ['$playerId', '$$playerId'] }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            fantasy: 0,
-                        },
-                    },
+                            fantasy: 0
+                        }
+                    }
                 ],
-                as: 'events',
-            },
+                as: 'events'
+            }
         },
         {
             $lookup: {
@@ -46,19 +46,19 @@ module.exports = {
                                 $and: [
                                     { $eq: ['$type', 'statistic'] },
                                     { $gt: ['$minutes', 0] },
-                                    { $eq: ['$playerId', '$$playerId'] },
-                                ],
-                            },
-                        },
+                                    { $eq: ['$playerId', '$$playerId'] }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            fantasy: 0,
-                        },
-                    },
+                            fantasy: 0
+                        }
+                    }
                 ],
-                as: 'statistics',
-            },
+                as: 'statistics'
+            }
         },
         {
             $lookup: {
@@ -72,18 +72,18 @@ module.exports = {
                                     { $eq: ['$contractType', 'player'] },
                                     { $eq: ['$playerId', '$$playerId'] },
                                     { $lte: ['$startDate', ISODate()] },
-                                    { $gte: ['$endDate', ISODate()] },
-                                ],
-                            },
-                        },
+                                    { $gte: ['$endDate', ISODate()] }
+                                ]
+                            }
+                        }
                     },
                     {
                         $lookup: {
                             from: 'teams',
                             localField: 'teamId',
                             foreignField: '_id',
-                            as: 'Team',
-                        },
+                            as: 'Team'
+                        }
                     },
                     {
                         $project: {
@@ -91,12 +91,12 @@ module.exports = {
                             club: '$Team.name',
                             country: '$Team.country',
                             city: '$Team.city',
-                            salary: '$salary',
-                        },
-                    },
+                            salary: '$salary'
+                        }
+                    }
                 ],
-                as: 'currentContract',
-            },
+                as: 'currentContract'
+            }
         },
         {
             $project: {
@@ -113,10 +113,10 @@ module.exports = {
                             input: '$events',
                             as: 'ev',
                             cond: {
-                                $eq: ['$$ev.eventType', 'Yellow Card'],
-                            },
-                        },
-                    },
+                                $eq: ['$$ev.eventType', 'Yellow Card']
+                            }
+                        }
+                    }
                 },
                 yellowRedCards: {
                     $size: {
@@ -124,10 +124,10 @@ module.exports = {
                             input: '$events',
                             as: 'ev',
                             cond: {
-                                $eq: ['$$ev.eventType', 'Yellow Red Card'],
-                            },
-                        },
-                    },
+                                $eq: ['$$ev.eventType', 'Yellow Red Card']
+                            }
+                        }
+                    }
                 },
                 redCards: {
                     $size: {
@@ -135,10 +135,10 @@ module.exports = {
                             input: '$events',
                             as: 'ev',
                             cond: {
-                                $eq: ['$$ev.eventType', 'Red Card'],
-                            },
-                        },
-                    },
+                                $eq: ['$$ev.eventType', 'Red Card']
+                            }
+                        }
+                    }
                 },
                 goals: {
                     $size: {
@@ -146,18 +146,18 @@ module.exports = {
                             input: '$events',
                             as: 'ev',
                             cond: {
-                                $eq: ['$$ev.eventType', 'Goal'],
-                            },
-                        },
-                    },
+                                $eq: ['$$ev.eventType', 'Goal']
+                            }
+                        }
+                    }
                 },
                 totalGames: {
-                    $size: '$statistics',
-                },
-            },
-        },
+                    $size: '$statistics'
+                }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

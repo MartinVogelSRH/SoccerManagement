@@ -5,15 +5,15 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'FC Bayern München',
-            },
+                name: 'FC Bayern München'
+            }
         },
         {
             $lookup: {
                 from: 'statistics',
                 let: {
                     team_ID: '$_id',
-                    teamName: '$name',
+                    teamName: '$name'
                 },
                 pipeline: [
                     {
@@ -21,44 +21,44 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$type', 'statistic'],
+                                        $eq: ['$type', 'statistic']
                                     },
                                     {
-                                        $eq: ['$teamId', '$$team_ID'],
+                                        $eq: ['$teamId', '$$team_ID']
                                     },
                                     {
                                         $eq: [
                                             {
                                                 $ifNull: [
                                                     '$playerId',
-                                                    'Unspecified',
-                                                ],
+                                                    'Unspecified'
+                                                ]
                                             },
-                                            'Unspecified',
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            'Unspecified'
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
                             _id: 0,
-                            possession: 1,
-                        },
-                    },
+                            possession: 1
+                        }
+                    }
                 ],
-                as: 'stats',
-            },
+                as: 'stats'
+            }
         },
         {
             $project: {
                 name: 1,
-                poss: { $avg: '$stats.possession' },
-            },
-        },
+                poss: { $avg: '$stats.possession' }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

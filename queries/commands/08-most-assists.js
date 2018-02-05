@@ -7,12 +7,12 @@ module.exports = {
             $match: {
                 eventType: 'Goal',
                 additionalPlayerId: {
-                    $exists: true,
-                },
-            },
+                    $exists: true
+                }
+            }
         },
         {
-            $sortByCount: '$additionalPlayerId',
+            $sortByCount: '$additionalPlayerId'
         },
         { $limit: 5 },
         {
@@ -20,11 +20,11 @@ module.exports = {
                 from: 'people',
                 localField: '_id',
                 foreignField: '_id',
-                as: 'Player',
-            },
-        },
+                as: 'Player'
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

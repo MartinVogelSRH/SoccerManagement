@@ -6,8 +6,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Ivory',
-                lastName: 'Langosh',
-            },
+                lastName: 'Langosh'
+            }
         },
         {
             $lookup: {
@@ -15,7 +15,7 @@ module.exports = {
                 let: {
                     manager: '$_id',
                     firstName: '$firstName',
-                    lastName: '$lastName',
+                    lastName: '$lastName'
                 },
                 pipeline: [
                     {
@@ -23,29 +23,29 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$managerId', '$$manager'],
+                                        $eq: ['$managerId', '$$manager']
                                     },
                                     {
                                         $eq: [
                                             '$awardType',
-                                            'ManagerOfTheMonthAward',
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            'ManagerOfTheMonthAward'
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
                             _id: 1,
                             manager: '$$manager',
                             lastName: '$$lastName',
-                            firstName: '$$firstName',
-                        },
-                    },
+                            firstName: '$$firstName'
+                        }
+                    }
                 ],
-                as: 'mAward',
-            },
+                as: 'mAward'
+            }
         },
         {
             $project: {
@@ -53,11 +53,11 @@ module.exports = {
                 manager: 1,
                 lastName: 1,
                 firstName: 1,
-                awards: { $size: '$mAward' },
-            },
-        },
+                awards: { $size: '$mAward' }
+            }
+        }
     ],
     cursor: {
-        batchSize: 10,
-    },
+        batchSize: 10
+    }
 };

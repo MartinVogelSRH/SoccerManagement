@@ -12,31 +12,31 @@ module.exports = {
                         {
                             $or: [
                                 {
-                                    $eq: ['$awayTeamId', ObjectId(FCB)],
+                                    $eq: ['$awayTeamId', ObjectId(FCB)]
                                 },
                                 {
-                                    $eq: ['$homeTeamId', ObjectId(FCB)],
-                                },
-                            ],
+                                    $eq: ['$homeTeamId', ObjectId(FCB)]
+                                }
+                            ]
                         },
                         {
                             $gte: [
                                 '$startDate',
-                                ISODate('2015-06-13 00:00:00.000'),
-                            ],
+                                ISODate('2015-06-13 00:00:00.000')
+                            ]
                         },
                         {
                             $lte: [
                                 '$startDate',
-                                ISODate('2016-06-13 00:00:00.000'),
-                            ],
-                        },
-                    ],
-                },
-            },
-        },
+                                ISODate('2016-06-13 00:00:00.000')
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

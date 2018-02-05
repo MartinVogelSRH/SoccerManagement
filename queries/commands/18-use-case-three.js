@@ -7,8 +7,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'FC Bayern München',
-            },
+                name: 'FC Bayern München'
+            }
         },
         {
             $lookup: {
@@ -25,27 +25,27 @@ module.exports = {
                                     {
                                         $lt: [
                                             '$startDate',
-                                            ISODate('2018-02-04T16:02:01.718Z'),
-                                        ],
+                                            ISODate('2018-02-04T16:02:01.718Z')
+                                        ]
                                     },
                                     {
                                         $gt: [
                                             '$endDate',
-                                            ISODate('2018-02-04T16:02:01.718Z'),
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            ISODate('2018-02-04T16:02:01.718Z')
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            playerId: 1,
-                        },
-                    },
+                            playerId: 1
+                        }
+                    }
                 ],
-                as: 'players',
-            },
+                as: 'players'
+            }
         },
         {
             $lookup: {
@@ -58,14 +58,14 @@ module.exports = {
                                 $and: [
                                     { $eq: ['$type', 'statistic'] },
                                     { $lte: ['$playerId', null] },
-                                    { $eq: ['$teamId', '$$team_id'] },
-                                ],
-                            },
-                        },
-                    },
+                                    { $eq: ['$teamId', '$$team_id'] }
+                                ]
+                            }
+                        }
+                    }
                 ],
-                as: 'statistics',
-            },
+                as: 'statistics'
+            }
         },
         {
             $lookup: {
@@ -77,14 +77,14 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     { $eq: ['$type', 'event'] },
-                                    { $eq: ['$teamId', '$$team_id'] },
-                                ],
-                            },
-                        },
-                    },
+                                    { $eq: ['$teamId', '$$team_id'] }
+                                ]
+                            }
+                        }
+                    }
                 ],
-                as: 'events',
-            },
+                as: 'events'
+            }
         },
         {
             $project: {
@@ -117,7 +117,7 @@ module.exports = {
                             penaltyGoals: 0,
                             yellowCards: 0,
                             yellowRedCards: 0,
-                            redCards: 0,
+                            redCards: 0
                         },
                         in: {
                             substitutions: {
@@ -128,14 +128,14 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Substitution',
-                                                ],
+                                                    'Substitution'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
+                                            0
+                                        ]
+                                    }
+                                ]
                             },
                             goals: {
                                 $add: [
@@ -145,14 +145,14 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Goal',
-                                                ],
+                                                    'Goal'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
+                                            0
+                                        ]
+                                    }
+                                ]
                             },
                             penaltyGoals: {
                                 $add: [
@@ -162,14 +162,14 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Penalty Goal',
-                                                ],
+                                                    'Penalty Goal'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
+                                            0
+                                        ]
+                                    }
+                                ]
                             },
                             yellowCards: {
                                 $add: [
@@ -179,14 +179,14 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Yellow Card',
-                                                ],
+                                                    'Yellow Card'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
+                                            0
+                                        ]
+                                    }
+                                ]
                             },
                             yellowRedCards: {
                                 $add: [
@@ -196,14 +196,14 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Yellow Red Card',
-                                                ],
+                                                    'Yellow Red Card'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
+                                            0
+                                        ]
+                                    }
+                                ]
                             },
                             redCards: {
                                 $add: [
@@ -213,22 +213,22 @@ module.exports = {
                                             {
                                                 $eq: [
                                                     '$$this.eventType',
-                                                    'Red Card',
-                                                ],
+                                                    'Red Card'
+                                                ]
                                             },
                                             1,
-                                            0,
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
-                    },
-                },
-            },
-        },
+                                            0
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

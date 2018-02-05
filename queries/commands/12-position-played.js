@@ -8,8 +8,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Lukas',
-                lastName: 'Hinterseer',
-            },
+                lastName: 'Hinterseer'
+            }
         },
         {
             $lookup: {
@@ -17,7 +17,7 @@ module.exports = {
                 let: {
                     player: '$_id',
                     firstName: '$firstName',
-                    lastName: '$lastName',
+                    lastName: '$lastName'
                 },
                 pipeline: [
                     {
@@ -25,14 +25,14 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$playerId', '$$player'],
+                                        $eq: ['$playerId', '$$player']
                                     },
                                     {
-                                        $eq: ['$type', 'contract'],
-                                    },
-                                ],
-                            },
-                        },
+                                        $eq: ['$type', 'contract']
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -40,12 +40,12 @@ module.exports = {
                             player: '$$player',
                             firstName: '$$firstName',
                             lastName: '$$lastName',
-                            teamId: '$teamId',
-                        },
-                    },
+                            teamId: '$teamId'
+                        }
+                    }
                 ],
-                as: 'Teams',
-            },
+                as: 'Teams'
+            }
         },
         { $unwind: '$Teams' },
         { $replaceRoot: { newRoot: '$Teams' } },
@@ -56,7 +56,7 @@ module.exports = {
                     team: '$teamId',
                     player: '$player',
                     firstName: '$firstName',
-                    lastName: '$lastName',
+                    lastName: '$lastName'
                 },
                 pipeline: [
                     {
@@ -66,28 +66,28 @@ module.exports = {
                                     {
                                         $or: [
                                             {
-                                                $eq: ['$awayTeamId', '$$team'],
+                                                $eq: ['$awayTeamId', '$$team']
                                             },
                                             {
-                                                $eq: ['$homeTeamId', '$$team'],
-                                            },
-                                        ],
+                                                $eq: ['$homeTeamId', '$$team']
+                                            }
+                                        ]
                                     },
                                     {
                                         $gte: [
                                             '$startDate',
-                                            ISODate('2016-06-13 00:00:00.000'),
-                                        ],
+                                            ISODate('2016-06-13 00:00:00.000')
+                                        ]
                                     },
                                     {
                                         $lte: [
                                             '$startDate',
-                                            ISODate('2017-06-13 00:00:00.000'),
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            ISODate('2017-06-13 00:00:00.000')
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -95,12 +95,12 @@ module.exports = {
                             player: '$$player',
                             firstName: '$$firstName',
                             lastName: '$$lastName',
-                            teamId: '$$team',
-                        },
-                    },
+                            teamId: '$$team'
+                        }
+                    }
                 ],
-                as: 'Games',
-            },
+                as: 'Games'
+            }
         },
         { $unwind: '$Games' },
         { $replaceRoot: { newRoot: '$Games' } },
@@ -112,7 +112,7 @@ module.exports = {
                     team: '$teamId',
                     firstName: '$firstName',
                     lastName: '$lastName',
-                    player: '$player',
+                    player: '$player'
                 },
                 pipeline: [
                     {
@@ -120,14 +120,14 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$playerId', '$$player'],
+                                        $eq: ['$playerId', '$$player']
                                     },
                                     {
-                                        $gt: ['$position', null],
-                                    },
-                                ],
-                            },
-                        },
+                                        $gt: ['$position', null]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -137,12 +137,12 @@ module.exports = {
                             lastName: '$$lastName',
                             teamId: '$$team',
                             gameId: '$gameId',
-                            position: '$position',
-                        },
-                    },
+                            position: '$position'
+                        }
+                    }
                 ],
-                as: 'Position',
-            },
+                as: 'Position'
+            }
         },
         { $unwind: '$Position' },
         { $replaceRoot: { newRoot: '$Position' } },
@@ -152,12 +152,12 @@ module.exports = {
                     player: '$player',
                     firstName: '$firstName',
                     lastName: '$lastName',
-                    position: '$position',
-                },
-            },
-        },
+                    position: '$position'
+                }
+            }
+        }
     ],
     cursor: {
-        batchSize: 10,
-    },
+        batchSize: 10
+    }
 };

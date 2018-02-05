@@ -6,8 +6,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Paweł',
-                lastName: 'Olkowski',
-            },
+                lastName: 'Olkowski'
+            }
         },
         {
             $lookup: {
@@ -15,7 +15,7 @@ module.exports = {
                 let: {
                     player_ID: '$_id',
                     firstName: '$firstName',
-                    lastName: '$lastName',
+                    lastName: '$lastName'
                 },
                 pipeline: [
                     {
@@ -23,29 +23,29 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$playerId', '$$player_ID'],
+                                        $eq: ['$playerId', '$$player_ID']
                                     },
                                     {
                                         $eq: [
                                             '$awardType',
-                                            'ManOfTheMatchAward',
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            'ManOfTheMatchAward'
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
                             _id: 1,
                             player: '$$player_ID',
                             firstName: '$$firstName',
-                            lastName: '$$lastName',
-                        },
-                    },
+                            lastName: '$$lastName'
+                        }
+                    }
                 ],
-                as: 'Awards',
-            },
+                as: 'Awards'
+            }
         },
         {
             $project: {
@@ -53,11 +53,11 @@ module.exports = {
                 player: 1,
                 firstName: 1,
                 lastName: 1,
-                awardsWon: { $size: '$Awards' },
-            },
-        },
+                awardsWon: { $size: '$Awards' }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

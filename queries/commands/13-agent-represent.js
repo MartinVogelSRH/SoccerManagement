@@ -7,8 +7,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'Bundesliga',
-            },
+                name: 'Bundesliga'
+            }
         },
         {
             $lookup: {
@@ -18,9 +18,9 @@ module.exports = {
                     {
                         $match: {
                             $expr: {
-                                $eq: ['$name', '$$name'],
-                            },
-                        },
+                                $eq: ['$name', '$$name']
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -30,22 +30,22 @@ module.exports = {
                             season: '$season',
                             teams: '$teams',
                             startDate: '$startDate',
-                            endDate: '$endDate',
-                        },
-                    },
+                            endDate: '$endDate'
+                        }
+                    }
                 ],
-                as: 'League',
-            },
+                as: 'League'
+            }
         },
         { $unwind: '$League' },
         { $replaceRoot: { newRoot: '$League' } },
         {
             $sort: {
-                startDate: -1,
-            },
+                startDate: -1
+            }
         },
         {
-            $limit: 1,
+            $limit: 1
         },
         { $unwind: '$teams' },
 
@@ -61,7 +61,7 @@ module.exports = {
                     name: '$name',
                     season: '$season',
                     startDate: '$startDate',
-                    endDate: '$endDate',
+                    endDate: '$endDate'
                 },
                 pipeline: [
                     {
@@ -69,17 +69,17 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$contractType', 'player'],
+                                        $eq: ['$contractType', 'player']
                                     },
                                     {
-                                        $eq: ['$teamId', '$$teams'],
+                                        $eq: ['$teamId', '$$teams']
                                     },
                                     {
-                                        $gt: ['$endDate', ISODate()],
-                                    },
-                                ],
-                            },
-                        },
+                                        $gt: ['$endDate', ISODate()]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -90,12 +90,12 @@ module.exports = {
                             season: '$$season',
                             startDate: '$$startDate',
                             endDate: '$$endDate',
-                            playerId: '$playerId',
-                        },
-                    },
+                            playerId: '$playerId'
+                        }
+                    }
                 ],
-                as: 'PlayerContracts',
-            },
+                as: 'PlayerContracts'
+            }
         },
 
         { $unwind: '$PlayerContracts' },
@@ -110,7 +110,7 @@ module.exports = {
                     season: '$season',
                     startDate: '$startDate',
                     endDate: '$endDate',
-                    playerId: '$playerId',
+                    playerId: '$playerId'
                 },
                 pipeline: [
                     {
@@ -118,20 +118,20 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$contractType', 'agent'],
+                                        $eq: ['$contractType', 'agent']
                                     },
                                     {
-                                        $eq: ['$playerId', '$$playerId'],
+                                        $eq: ['$playerId', '$$playerId']
                                     },
                                     {
-                                        $lte: ['$startDate', '$$startDate'],
+                                        $lte: ['$startDate', '$$startDate']
                                     },
                                     {
-                                        $gte: ['$endDate', '$$startDate'],
-                                    },
-                                ],
-                            },
-                        },
+                                        $gte: ['$endDate', '$$startDate']
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
@@ -143,15 +143,15 @@ module.exports = {
                             startDate: '$$startDate',
                             endDate: '$$endDate',
                             playerId: '$$playerId',
-                            agentId: '$agentId',
-                        },
-                    },
+                            agentId: '$agentId'
+                        }
+                    }
                 ],
-                as: 'AgentContracts',
-            },
+                as: 'AgentContracts'
+            }
         },
         {
-            $unwind: '$AgentContracts',
+            $unwind: '$AgentContracts'
         },
         { $replaceRoot: { newRoot: '$AgentContracts' } },
         {
@@ -159,25 +159,25 @@ module.exports = {
                 _id: '$agentId',
                 competition: { $first: '$competition' },
                 season: { $first: '$season' },
-                count: { $sum: 1 },
-            },
+                count: { $sum: 1 }
+            }
         },
         {
-            $sort: { count: -1 },
+            $sort: { count: -1 }
         },
         {
-            $limit: 4,
+            $limit: 4
         },
         {
             $lookup: {
                 from: 'people',
                 localField: '_id',
                 foreignField: '_id',
-                as: 'Agent',
-            },
-        },
+                as: 'Agent'
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

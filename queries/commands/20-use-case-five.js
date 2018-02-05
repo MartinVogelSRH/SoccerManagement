@@ -5,17 +5,17 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                eventType: 'Yellow Card',
-            },
+                eventType: 'Yellow Card'
+            }
         },
         {
             $group: {
                 _id: '$teamId',
-                count: { $sum: 1 },
-            },
+                count: { $sum: 1 }
+            }
         },
         {
-            $sort: { count: -1 },
+            $sort: { count: -1 }
         },
         { $limit: 10 },
         {
@@ -23,8 +23,8 @@ module.exports = {
                 from: 'teams',
                 localField: '_id',
                 foreignField: '_id',
-                as: 'team',
-            },
+                as: 'team'
+            }
         },
         {
             $project: {
@@ -33,11 +33,11 @@ module.exports = {
                 'team.type': 1,
                 'team.name': 1,
                 'team.city': 1,
-                'team.country': 1,
-            },
-        },
+                'team.country': 1
+            }
+        }
     ],
     cursor: {
-        batchSize: 10,
-    },
+        batchSize: 10
+    }
 };

@@ -5,15 +5,15 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'FC Augsburg',
-            },
+                name: 'FC Augsburg'
+            }
         },
         {
             $lookup: {
                 from: 'games',
                 let: {
                     team_ID: '$_id',
-                    teamName: '$name',
+                    teamName: '$name'
                 },
                 pipeline: [
                     {
@@ -21,22 +21,22 @@ module.exports = {
                             $expr: {
                                 $or: [
                                     {
-                                        $eq: ['$homeTeamId', '$$team_ID'],
+                                        $eq: ['$homeTeamId', '$$team_ID']
                                     },
                                     {
-                                        $eq: ['$awayTeamId', '$$team_ID'],
-                                    },
-                                ],
-                            },
-                        },
+                                        $eq: ['$awayTeamId', '$$team_ID']
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $sort: {
-                            startDate: -1,
-                        },
+                            startDate: -1
+                        }
                     },
                     {
-                        $limit: 5,
+                        $limit: 5
                     },
                     {
                         $project: {
@@ -44,15 +44,15 @@ module.exports = {
                             relevantTeam: '$$team_ID',
                             homeTeam: '$homeTeamId',
                             awayTeam: '$awayTeamId',
-                            startDate: 1,
-                        },
-                    },
+                            startDate: 1
+                        }
+                    }
                 ],
-                as: 'games',
-            },
+                as: 'games'
+            }
         },
         {
-            $unwind: '$games',
+            $unwind: '$games'
         },
         { $replaceRoot: { newRoot: '$games' } },
         {
@@ -64,7 +64,7 @@ module.exports = {
                     homeTeam: '$homeTeam',
                     awayTeam: '$awayTeam',
                     startDate: 'startDate',
-                    teamName: '$startDate',
+                    teamName: '$startDate'
                 },
                 pipeline: [
                     {
@@ -72,40 +72,40 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$type', 'statistic'],
+                                        $eq: ['$type', 'statistic']
                                     },
                                     {
-                                        $eq: ['$gameId', '$$game_id'],
+                                        $eq: ['$gameId', '$$game_id']
                                     },
                                     {
-                                        $eq: ['$teamId', '$$relevantTeam'],
+                                        $eq: ['$teamId', '$$relevantTeam']
                                     },
                                     {
                                         $eq: [
                                             {
                                                 $ifNull: [
                                                     '$playerId',
-                                                    'Unspecified',
-                                                ],
+                                                    'Unspecified'
+                                                ]
                                             },
-                                            'Unspecified',
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            'Unspecified'
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            fantasy: 0,
-                        },
-                    },
+                            fantasy: 0
+                        }
+                    }
                 ],
-                as: 'gameStat',
-            },
-        },
+                as: 'gameStat'
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

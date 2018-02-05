@@ -6,8 +6,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Jérôme',
-                lastName: 'Boateng',
-            },
+                lastName: 'Boateng'
+            }
         },
         {
             $lookup: {
@@ -16,7 +16,7 @@ module.exports = {
                     player_ID: '$_id',
                     firstName: '$firstName',
                     lastName: '$lastName',
-                    birthday: '$dateOfBirth',
+                    birthday: '$dateOfBirth'
                 },
                 pipeline: [
                     {
@@ -24,23 +24,23 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$type', 'statistic'],
+                                        $eq: ['$type', 'statistic']
                                     },
                                     {
-                                        $eq: ['$playerId', '$$player_ID'],
-                                    },
-                                ],
-                            },
-                        },
+                                        $eq: ['$playerId', '$$player_ID']
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            fantasy: 0,
-                        },
-                    },
+                            fantasy: 0
+                        }
+                    }
                 ],
-                as: 'stats',
-            },
+                as: 'stats'
+            }
         },
         {
             $project: {
@@ -48,11 +48,11 @@ module.exports = {
                 firstName: 1,
                 lastName: 1,
                 dateOfBirth: 1,
-                minutes: { $sum: '$stats.minutes' },
-            },
-        },
+                minutes: { $sum: '$stats.minutes' }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

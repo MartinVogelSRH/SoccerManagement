@@ -12,18 +12,18 @@ module.exports = {
                         {
                             $gte: [
                                 '$startDate',
-                                ISODate('2018-01-22T00:00:00.166Z'),
-                            ],
+                                ISODate('2018-01-22T00:00:00.166Z')
+                            ]
                         },
                         {
                             $lte: [
                                 '$endDate',
-                                ISODate('2018-01-28T23:59:59.166Z'),
-                            ],
-                        },
-                    ],
-                },
-            },
+                                ISODate('2018-01-28T23:59:59.166Z')
+                            ]
+                        }
+                    ]
+                }
+            }
         },
         {
             $lookup: {
@@ -42,35 +42,35 @@ module.exports = {
                                                     {
                                                         $eq: [
                                                             '$type',
-                                                            'statistic',
-                                                        ],
+                                                            'statistic'
+                                                        ]
                                                     },
                                                     {
                                                         $lte: [
                                                             '$playerId',
-                                                            null,
-                                                        ],
-                                                    },
-                                                ],
+                                                            null
+                                                        ]
+                                                    }
+                                                ]
                                             },
-                                            { $eq: ['$type', 'event'] },
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                            { $eq: ['$type', 'event'] }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $project: {
-                            fantasy: 0,
-                        },
-                    },
+                            fantasy: 0
+                        }
+                    }
                 ],
-                as: 'gameStats',
-            },
+                as: 'gameStats'
+            }
         },
         {
-            $unwind: '$gameStats',
+            $unwind: '$gameStats'
         },
         { $replaceRoot: { newRoot: '$gameStats' } },
         {
@@ -78,39 +78,39 @@ module.exports = {
                 _id: '$teamId',
                 Goals: {
                     $sum: {
-                        $cond: [{ $eq: ['$eventType', 'Goal'] }, 1, 0],
-                    },
+                        $cond: [{ $eq: ['$eventType', 'Goal'] }, 1, 0]
+                    }
                 },
                 PenaltyGoals: {
                     $sum: {
-                        $cond: [{ $eq: ['$eventType', 'Penalty Goal'] }, 1, 0],
-                    },
+                        $cond: [{ $eq: ['$eventType', 'Penalty Goal'] }, 1, 0]
+                    }
                 },
                 OwnGoals: {
                     $sum: {
-                        $cond: [{ $eq: ['$eventType', 'Own Goal'] }, 1, 0],
-                    },
+                        $cond: [{ $eq: ['$eventType', 'Own Goal'] }, 1, 0]
+                    }
                 },
                 AveragePossession: { $avg: '$possession' },
                 shotsOnGoal: { $sum: '$shotsOnGoal' },
 
                 games: {
                     $sum: {
-                        $cond: [{ $eq: ['$type', 'statistic'] }, 1, 0],
-                    },
+                        $cond: [{ $eq: ['$type', 'statistic'] }, 1, 0]
+                    }
                 },
                 passes: { $sum: '$passes' },
                 passesCompleted: { $sum: '$passesCompleted' },
-                blockedShots: { $sum: '$blockedShots' },
-            },
+                blockedShots: { $sum: '$blockedShots' }
+            }
         },
         {
             $lookup: {
                 from: 'teams',
                 localField: '_id',
                 foreignField: '_id',
-                as: 'Team',
-            },
+                as: 'Team'
+            }
         },
         {
             $project: {
@@ -138,8 +138,8 @@ module.exports = {
                                     $cond: [
                                         { $gt: ['$Goals', 0] },
                                         { $divide: ['$shotsOnGoal', '$Goals'] },
-                                        0,
-                                    ],
+                                        0
+                                    ]
                                 },
                                 {
                                     $cond: [
@@ -147,31 +147,31 @@ module.exports = {
                                         {
                                             $divide: [
                                                 '$passesCompleted',
-                                                '$passes',
-                                            ],
+                                                '$passes'
+                                            ]
                                         },
-                                        0,
-                                    ],
-                                },
-                            ],
+                                        0
+                                    ]
+                                }
+                            ]
                         },
-                        '$games',
-                    ],
-                },
-            },
+                        '$games'
+                    ]
+                }
+            }
         },
         {
-            $sort: { score: -1 },
+            $sort: { score: -1 }
         },
         {
             $group: {
                 _id: null,
                 best: { $first: '$$ROOT' },
-                worst: { $last: '$$ROOT' },
-            },
-        },
+                worst: { $last: '$$ROOT' }
+            }
+        }
     ],
     cursor: {
-        batchSize: 200,
-    },
+        batchSize: 200
+    }
 };

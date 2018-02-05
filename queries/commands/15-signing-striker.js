@@ -12,18 +12,18 @@ module.exports = {
                         {
                             $gte: [
                                 '$startDate',
-                                ISODate('2018-01-22T00:00:00.166Z'),
-                            ],
+                                ISODate('2018-01-22T00:00:00.166Z')
+                            ]
                         },
                         {
                             $lte: [
                                 '$endDate',
-                                ISODate('2018-01-28T23:59:59.166Z'),
-                            ],
-                        },
-                    ],
-                },
-            },
+                                ISODate('2018-01-28T23:59:59.166Z')
+                            ]
+                        }
+                    ]
+                }
+            }
         },
         {
             $lookup: {
@@ -41,13 +41,13 @@ module.exports = {
                                             '$position',
                                             [
                                                 'Centre Forward',
-                                                'Withdrawn Striker',
-                                            ],
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
+                                                'Withdrawn Striker'
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $lookup: {
@@ -59,34 +59,28 @@ module.exports = {
                                         $expr: {
                                             $and: [
                                                 {
-                                                    $eq: [
-                                                        '$gameId',
-                                                        '$$gameId',
-                                                    ],
+                                                    $eq: ['$gameId', '$$gameId']
                                                 },
                                                 { $eq: ['$type', 'event'] },
                                                 {
                                                     $eq: [
                                                         '$playerId',
-                                                        '$$playerId',
-                                                    ],
+                                                        '$$playerId'
+                                                    ]
                                                 },
                                                 {
                                                     $in: [
                                                         '$eventType',
-                                                        [
-                                                            'Goal',
-                                                            'Penalty Goal',
-                                                        ],
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                    },
-                                },
+                                                        ['Goal', 'Penalty Goal']
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
                             ],
-                            as: 'Goals',
-                        },
+                            as: 'Goals'
+                        }
                     },
                     {
                         $project: {
@@ -98,10 +92,10 @@ module.exports = {
                                         input: '$Goals',
                                         as: 'ev',
                                         cond: {
-                                            $eq: ['$$ev.eventType', 'Goal'],
-                                        },
-                                    },
-                                },
+                                            $eq: ['$$ev.eventType', 'Goal']
+                                        }
+                                    }
+                                }
                             },
                             penaltyGoals: {
                                 $size: {
@@ -111,26 +105,26 @@ module.exports = {
                                         cond: {
                                             $eq: [
                                                 '$$ev.eventType',
-                                                'Penalty Goal',
-                                            ],
-                                        },
-                                    },
-                                },
+                                                'Penalty Goal'
+                                            ]
+                                        }
+                                    }
+                                }
                             },
                             shots: 1,
                             shotsOnGoal: 1,
                             tacklesWon: 1,
                             offsides: 1,
                             touches: 1,
-                            minutes: 1,
-                        },
-                    },
+                            minutes: 1
+                        }
+                    }
                 ],
-                as: 'playerStats',
-            },
+                as: 'playerStats'
+            }
         },
         {
-            $unwind: '$playerStats',
+            $unwind: '$playerStats'
         },
         { $replaceRoot: { newRoot: '$playerStats' } },
         {
@@ -144,16 +138,16 @@ module.exports = {
                 minutes: { $sum: '$minutes' },
                 goals: { $sum: '$goals' },
                 penaltyGoals: { $sum: '$penaltyGoals' },
-                games: { $sum: 1 },
-            },
+                games: { $sum: 1 }
+            }
         },
         {
             $lookup: {
                 from: 'people',
                 localField: '_id',
                 foreignField: '_id',
-                as: 'Striker',
-            },
+                as: 'Striker'
+            }
         },
         {
             $project: {
@@ -172,15 +166,15 @@ module.exports = {
                     $cond: [
                         { $gt: ['$goals', 0] },
                         { $divide: ['$minutes', '$goals'] },
-                        0,
-                    ],
+                        0
+                    ]
                 },
                 minutespergame: {
                     $cond: [
                         { $gt: ['$minutes', 0] },
                         { $divide: ['$games', '$minutes'] },
-                        0,
-                    ],
+                        0
+                    ]
                 },
                 score: {
                     $sum: [
@@ -188,42 +182,42 @@ module.exports = {
                             $cond: [
                                 { $gt: ['$goals', 0] },
                                 { $divide: ['$goals', '$games'] },
-                                0,
-                            ],
+                                0
+                            ]
                         },
                         {
                             $cond: [
                                 { $gt: ['$shotsOnGoal', 0] },
                                 { $divide: ['$goals', '$shotsOnGoal'] },
-                                '$shotsOnGoal',
-                            ],
+                                '$shotsOnGoal'
+                            ]
                         },
                         {
                             $cond: [
                                 { $gt: ['$shots', 0] },
                                 { $divide: ['$shotsOnGoal', '$shots'] },
-                                '$shots',
-                            ],
+                                '$shots'
+                            ]
                         },
                         {
                             $cond: [
                                 { $gt: ['$offsides', 0] },
                                 { $divide: ['$shotsOnGoal', '$offsides'] },
-                                '$offsides',
-                            ],
-                        },
-                    ],
-                },
-            },
+                                '$offsides'
+                            ]
+                        }
+                    ]
+                }
+            }
         },
         {
-            $sort: { score: -1 },
+            $sort: { score: -1 }
         },
         {
-            $limit: 10,
-        },
+            $limit: 10
+        }
     ],
     cursor: {
-        batchSize: 200,
-    },
+        batchSize: 200
+    }
 };

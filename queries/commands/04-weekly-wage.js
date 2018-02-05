@@ -10,34 +10,34 @@ module.exports = {
                 $expr: {
                     $and: [
                         {
-                            $eq: ['$type', 'contract'],
+                            $eq: ['$type', 'contract']
                         },
                         {
-                            $eq: ['$contractType', 'player'],
+                            $eq: ['$contractType', 'player']
                         },
                         {
-                            $lte: ['$startDate', ISODate()],
+                            $lte: ['$startDate', ISODate()]
                         },
                         {
-                            $gte: ['$endDate', ISODate()],
-                        },
-                    ],
-                },
-            },
+                            $gte: ['$endDate', ISODate()]
+                        }
+                    ]
+                }
+            }
         },
         {
             $group: {
                 _id: '$teamId',
-                bill: { $sum: { $trunc: { $divide: ['$salary', 52] } } },
-            },
+                bill: { $sum: { $trunc: { $divide: ['$salary', 52] } } }
+            }
         },
         {
             $lookup: {
                 from: 'teams',
                 foreignField: '_id',
                 localField: '_id',
-                as: 'team',
-            },
+                as: 'team'
+            }
         },
         { $sort: { bill: -1 } },
         {
@@ -47,11 +47,11 @@ module.exports = {
                 'team.type': 1,
                 'team.name': 1,
                 'team.city': 1,
-                'team.country': 1,
-            },
-        },
+                'team.country': 1
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

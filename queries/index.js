@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 const mongojs = require('mongojs');
+const pretty = require('pretty-hrtime');
 const ora = require('ora');
 // const inquirer = require('inquirer');
 
@@ -48,20 +49,22 @@ Promise.resolve(all(working))
         }
 
         const spinner = ora().start(`${info} ${description}`);
+        const start = process.hrtime();
         return run(command)
             .then(r => {
+                const end = process.hrtime(start);
                 const batch = _.get(r, ['cursor', 'firstBatch']);
+                spinner.text = `${info} ${description} (${pretty(end)})`;
                 if (_.isEmpty(batch)) {
                     spinner.fail();
                 } else {
                     spinner.succeed();
                 }
-                spinner.info(JSON.stringify(batch, null, 2));
+                // spinner.info(JSON.stringify(batch, null, 2));
             })
             .catch(err => {
                 spinner.fail();
                 console.error(err);
-            })
-            .finally(() => console.log());
+            });
     })
     .finally(() => db.close());

@@ -5,16 +5,16 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                lastName: 'Alonso Olana',
-            },
+                lastName: 'Alonso Olana'
+            }
         },
         {
             $lookup: {
                 from: 'people',
                 localField: 'lastName',
                 foreignField: 'lastName',
-                as: 'Player',
-            },
+                as: 'Player'
+            }
         },
         {
             $lookup: {
@@ -22,44 +22,44 @@ module.exports = {
                 let: {
                     playerId: '$_id',
                     lastName: '$lastName',
-                    firstName: '$firstName',
+                    firstName: '$firstName'
                 },
                 pipeline: [
                     {
                         $match: {
                             $expr: {
-                                $eq: ['$playerId', '$$playerId'],
-                            },
-                        },
+                                $eq: ['$playerId', '$$playerId']
+                            }
+                        }
                     },
                     {
                         $project: {
                             lastName: '$$lastName',
                             firstName: '$$firstName',
-                            eventType: '$eventType',
-                        },
-                    },
+                            eventType: '$eventType'
+                        }
+                    }
                 ],
-                as: 'Cards',
-            },
+                as: 'Cards'
+            }
         },
         {
-            $unwind: '$Cards',
+            $unwind: '$Cards'
         },
         { $replaceRoot: { newRoot: '$Cards' } },
         {
             $match: {
-                eventType: { $regex: /Card$/, $options: 'i' },
-            },
+                eventType: { $regex: /Card$/, $options: 'i' }
+            }
         },
         {
             $group: {
                 _id: { Player: '$lastName', Cards: '$eventType' },
-                count: { $sum: 1 },
-            },
-        },
+                count: { $sum: 1 }
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };

@@ -8,8 +8,8 @@ module.exports = {
         {
             $match: {
                 firstName: 'Thomas',
-                lastName: 'Müller',
-            },
+                lastName: 'Müller'
+            }
         },
         {
             $lookup: {
@@ -21,28 +21,28 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$type', 'marketvalue'],
+                                        $eq: ['$type', 'marketvalue']
                                     },
                                     {
-                                        $eq: ['$playerId', '$$player_id'],
-                                    },
-                                ],
-                            },
-                        },
+                                        $eq: ['$playerId', '$$player_id']
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $sort: {
-                            date: -1,
-                        },
+                            date: -1
+                        }
                     },
                     {
                         $project: {
-                            _id: 0,
-                        },
-                    },
+                            _id: 0
+                        }
+                    }
                 ],
-                as: 'marketValues',
-            },
+                as: 'marketValues'
+            }
         },
         {
             $lookup: {
@@ -54,28 +54,28 @@ module.exports = {
                             $expr: {
                                 $and: [
                                     {
-                                        $eq: ['$contractType', 'player'],
+                                        $eq: ['$contractType', 'player']
                                     },
                                     {
-                                        $eq: ['$playerId', '$$player_id'],
+                                        $eq: ['$playerId', '$$player_id']
                                     },
                                     {
-                                        $lte: ['$startDate', ISODate()],
+                                        $lte: ['$startDate', ISODate()]
                                     },
                                     {
-                                        $gte: ['$endDate', ISODate()],
-                                    },
-                                ],
-                            },
-                        },
+                                        $gte: ['$endDate', ISODate()]
+                                    }
+                                ]
+                            }
+                        }
                     },
                     {
                         $lookup: {
                             from: 'teams',
                             foreignField: '_id',
                             localField: 'teamId',
-                            as: 'team',
-                        },
+                            as: 'team'
+                        }
                     },
                     {
                         $project: {
@@ -85,12 +85,12 @@ module.exports = {
                             contractType: 0,
                             teamId: 0,
                             'team._id': 0,
-                            'team.fantasy': 0,
-                        },
-                    },
+                            'team.fantasy': 0
+                        }
+                    }
                 ],
-                as: 'contracts',
-            },
+                as: 'contracts'
+            }
         },
         {
             $project: {
@@ -99,20 +99,20 @@ module.exports = {
                     $trunc: {
                         $divide: [
                             {
-                                $subtract: [ISODate(), '$dateOfBirth'],
+                                $subtract: [ISODate(), '$dateOfBirth']
                             },
-                            31536000000,
-                        ],
-                    },
+                            31536000000
+                        ]
+                    }
                 },
                 firstName: 1,
                 lastName: 1,
                 marketValues: 1,
-                contracts: 1,
-            },
-        },
+                contracts: 1
+            }
+        }
     ],
     cursor: {
-        batchSize: 50,
-    },
+        batchSize: 50
+    }
 };
