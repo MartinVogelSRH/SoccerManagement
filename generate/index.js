@@ -3,11 +3,13 @@
 const _ = require('lodash');
 const monk = require('monk');
 const auto = require('p-auto');
+const faker = require('faker');
 const config = require('config');
 const moment = require('moment');
 const Promise = require('bluebird');
 
 const ora = require('ora');
+
 const dbs = {
     fantasy: monk(config.get('databases.fantasy')),
     football: monk(config.get('databases.football')),
@@ -42,6 +44,21 @@ const parser = {
             },
             {}
         ),
+};
+
+const fakePerson = () => {
+    const _id = monk.id();
+    const firstName = faker.name.firstName(0);
+    const lastName = faker.name.lastName(0);
+
+    const nationality = faker.address.country();
+    const dateOfBirth = moment
+        .utc()
+        .subtract(_.random(40, 60), 'years')
+        .dayOfYear(_.random(365))
+        .toDate();
+
+    return { _id, firstName, lastName, nationality, dateOfBirth };
 };
 
 const SeasonCache = {
@@ -175,13 +192,20 @@ const PlayersConverter = Players => {
 
 const ContractsConverter = Memberships => {
     const membershipsByPlayer = _.groupBy(Memberships, 'PlayerId');
+
+    const agentSize = _.size(membershipsByPlayer) / 150;
+    const fakeAgents = _.times(agentSize, fakePerson);
+
     const docs = _.flatMap(
         membershipsByPlayer,
         (playerMemberships, PlayerId) => {
             const playerId = PlayerCache.get(PlayerId);
 
-            let years = [];
-            const contracts = _.map(playerMemberships, fantasy => {
+            const dates = {
+                min: moment.utc(),
+                max: moment.utc().subtract(100, 'years'),
+            };
+            const playerContracts = _.map(playerMemberships, fantasy => {
                 const contract = { playerId };
                 contract.type = 'contract';
                 contract.contractType = 'player';
@@ -206,30 +230,59 @@ const ContractsConverter = Memberships => {
                           .startOf('day')
                           .toDate();
 
-                years = _.union(years, [
-                    contract.startDate.getFullYear(),
-                    contract.endDate.getFullYear(),
-                ]);
+                if (dates.min.isAfter(contract.startDate)) {
+                    dates.min = moment.utc(contract.startDate);
+                }
+
+                if (dates.max.isBefore(contract.endDate)) {
+                    dates.max = moment.utc(contract.endDate);
+                }
 
                 return contract;
             });
 
             let last = _.random(10, 100);
-            const marketvalues = _.map(years, year => {
+            const now = moment.utc();
+            const max =
+                dates.max.year() > now.year() ? now.year() : dates.max.year();
+            const years = max - dates.min.year();
+            const marketvalues = _.times(years + 1, i => {
                 const type = 'marketvalue';
 
                 last = _.random(last - _.random(2), last + _.random(3));
                 const value = last * 1000000;
-                const date = moment
-                    .utc()
-                    .year(year)
+                const date = dates.min
+                    .clone()
                     .startOf('year')
+                    .add(i, 'years')
                     .toDate();
 
                 return { type, playerId, value, date };
             });
 
-            return _.concat(contracts, marketvalues);
+            const agents = _.sampleSize(fakeAgents, _.random(1, 2));
+
+            const date = dates.min.clone();
+            const diff = _.round(
+                dates.max.clone().diff(date, 'month') / _.size(agents)
+            );
+
+            const agentContracts = _.map(agents, (agent, i) => {
+                const agentId = agent._id;
+                const startDate = date.clone().toDate();
+                const endDate = date.add((i + 1) * diff, 'month').toDate();
+
+                return {
+                    type: 'contract',
+                    contractType: 'agent',
+                    agentId,
+                    playerId: monk.id(playerId),
+                    startDate,
+                    endDate,
+                };
+            });
+
+            return _.concat(playerContracts, marketvalues, agentContracts);
         }
     );
 
@@ -237,7 +290,7 @@ const ContractsConverter = Memberships => {
         return null;
     }
 
-    return dbs.football.get('people').insert(docs);
+    return dbs.football.get('people').insert(_.concat(docs, fakeAgents));
 };
 
 const GamesConverter = BoxScores => {
@@ -451,144 +504,250 @@ const GamesConverter = BoxScores => {
 //   memberships: 24966,
 //   players: 12093
 // }
-const tasks = auto({
-    competitions: () => {
-        const spinner = ora().start('Load competitions');
 
-        const task = dbs.fantasy
-            .get('boxScores')
-            .find({ Lineups: [] }, { 'Game.RoundId': 1, _id: 0 })
-            .then(BoxScores => _.uniq(_.map(BoxScores, 'Game.RoundId')))
-            .then(RoundIds =>
-                dbs.fantasy.get('hierarchy').find({
-                    $and: [
-                        {
-                            'Competitions.Seasons.Rounds.RoundId': {
-                                $exists: true,
-                            },
-                        },
-                        {
-                            'Competitions.Seasons.Rounds.RoundId': {
-                                $nin: RoundIds,
-                            },
-                        },
-                    ],
-                })
-            )
-            .then(docs => _.flatMap(docs, 'Competitions'));
+const convert = areas => {
+    const tasks = auto({
+        competitions: () => {
+            const spinner = ora().start('Load competitions');
 
-        return Promise.resolve(task)
-            .tap(r => {
-                spinner.text = `Converting ${_.size(r)} competitions`;
-            })
-            .then(CompetitionsConverter)
-            .tap(r =>
-                spinner.succeed(`Created ${_.size(r.SeasonIds)} competitions`)
-            );
-    },
-    teams: [
-        'competitions',
-        results => {
-            const SeasonIds = _.get(results, ['competitions', 'SeasonIds']);
-
-            const spinner = ora().start(
-                `Loading teams for ${_.size(SeasonIds)} season`
-            );
-
-            const task = dbs.fantasy
-                .get('seasonTeams')
-                .find({ SeasonId: { $in: SeasonIds } });
-
-            return Promise.resolve(task)
-                .then(docs => {
-                    const Teams = _.uniqBy(_.map(docs, 'Team'), 'TeamId');
-                    const TeamIds = _.map(Teams, 'TeamId');
-
-                    spinner.text = `Converting ${_.size(TeamIds)} teams`;
-                    return TeamsConverter(Teams)
-                        .then(() => {
-                            const grouped = _.chain(docs)
-                                .groupBy(({ SeasonId }) =>
-                                    SeasonCache.get(SeasonId)
-                                )
-                                .mapValues(group =>
-                                    _.map(group, ({ TeamId }) =>
-                                        TeamCache.get(TeamId)
-                                    )
-                                )
-                                .value();
-
-                            return Promise.map(
-                                _.keys(grouped),
-                                competitionId => {
-                                    const teams = grouped[competitionId];
-                                    return dbs.football
-                                        .get('competitions')
-                                        .update(
-                                            { _id: competitionId },
-                                            { $set: { teams } }
-                                        );
-                                }
-                            );
-                        })
-                        .then(() => TeamIds);
-                })
-                .tap(r => spinner.succeed(`Created ${_.size(r)} teams`));
-        },
-    ],
-    memberships: [
-        'teams',
-        ({ teams }) =>
-            dbs.fantasy.get('memberships').find({ TeamId: { $in: teams } }),
-    ],
-    players: [
-        'memberships',
-        ({ memberships }) => {
-            const PlayerIds = _.uniq(_.map(memberships, 'PlayerId'));
-
-            const spinner = ora().start(
-                `Coverting ${_.size(PlayerIds)} players`
-            );
-
-            const task = dbs.fantasy
-                .get('players')
-                .find({ PlayerId: { $in: PlayerIds } })
-                .then(PlayersConverter);
-
-            return Promise.resolve(task).tap(r =>
-                spinner.succeed(`Created ${_.size(r)} players`)
-            );
-        },
-    ],
-    contracts: [
-        'memberships',
-        'players',
-        ({ memberships }) => ContractsConverter(memberships),
-    ],
-    games: [
-        'competitions',
-        'players',
-        results => {
-            const RoundIds = _.get(results, ['competitions', 'RoundIds']);
-
-            return Promise.mapSeries(RoundIds, RoundId => {
-                const spinner = ora().start(
-                    `Loading games for round ${RoundId}`
-                );
-                const task = dbs.fantasy
+            let query = Promise.resolve([]);
+            if (_.isString(areas)) {
+                query = dbs.fantasy
+                    .get('hierarchy')
+                    .findOne({ Name: areas })
+                    .then(one => [one]);
+            } else if (_.isArray(areas)) {
+                query = dbs.fantasy
+                    .get('hierarchy')
+                    .find({ Name: { $in: areas } });
+            } else {
+                query = dbs.fantasy
                     .get('boxScores')
-                    .find({ 'Game.RoundId': RoundId });
-                return Promise.resolve(task)
-                    .tap(r => {
-                        spinner.text = `Converting ${_.size(r)} games`;
-                    })
-                    .then(GamesConverter)
-                    .tap(r => spinner.succeed(`Created ${_.size(r[0])} games`));
-            });
-        },
-    ],
-});
+                    .find({ Lineups: [] }, { 'Game.RoundId': 1, _id: 0 })
+                    .then(BoxScores => _.uniq(_.map(BoxScores, 'Game.RoundId')))
+                    .then(RoundIds =>
+                        dbs.fantasy.get('hierarchy').find({
+                            $and: [
+                                {
+                                    'Competitions.Seasons.Rounds.RoundId': {
+                                        $exists: true,
+                                    },
+                                },
+                                {
+                                    'Competitions.Seasons.Rounds.RoundId': {
+                                        $nin: RoundIds,
+                                    },
+                                },
+                            ],
+                        })
+                    );
+            }
 
-Promise.resolve(tasks)
-    .catch(console.error)
-    .then(dbs.close);
+            return Promise.resolve(query)
+                .then(docs => _.flatMap(docs, 'Competitions'))
+                .tap(r => {
+                    spinner.text = `Converting ${_.size(r)} competitions`;
+                })
+                .then(CompetitionsConverter)
+                .tap(r =>
+                    spinner.succeed(
+                        `Created ${_.size(r.SeasonIds)} competitions`
+                    )
+                );
+        },
+        teams: [
+            'competitions',
+            results => {
+                const SeasonIds = _.get(results, ['competitions', 'SeasonIds']);
+
+                const spinner = ora().start(
+                    `Loading teams for ${_.size(SeasonIds)} season`
+                );
+
+                const task = dbs.fantasy
+                    .get('seasonTeams')
+                    .find({ SeasonId: { $in: SeasonIds } });
+
+                return Promise.resolve(task)
+                    .then(docs => {
+                        const Teams = _.uniqBy(_.map(docs, 'Team'), 'TeamId');
+                        const TeamIds = _.map(Teams, 'TeamId');
+
+                        spinner.text = `Converting ${_.size(TeamIds)} teams`;
+                        return TeamsConverter(Teams)
+                            .then(() => {
+                                const grouped = _.chain(docs)
+                                    .groupBy(({ SeasonId }) =>
+                                        SeasonCache.get(SeasonId)
+                                    )
+                                    .mapValues(group =>
+                                        _.map(group, ({ TeamId }) =>
+                                            TeamCache.get(TeamId)
+                                        )
+                                    )
+                                    .value();
+
+                                return Promise.map(
+                                    _.keys(grouped),
+                                    competitionId => {
+                                        const teams = grouped[competitionId];
+                                        return dbs.football
+                                            .get('competitions')
+                                            .update(
+                                                { _id: competitionId },
+                                                { $set: { teams } }
+                                            );
+                                    }
+                                );
+                            })
+                            .then(() => TeamIds);
+                    })
+                    .tap(r => spinner.succeed(`Created ${_.size(r)} teams`));
+            },
+        ],
+        memberships: [
+            'teams',
+            ({ teams }) =>
+                dbs.fantasy.get('memberships').find({ TeamId: { $in: teams } }),
+        ],
+        managers: [
+            'teams',
+            ({ teams }) => {
+                const spinner = ora().start(
+                    'Generate managers and contracts and awards ...'
+                );
+
+                const contractType = 'manager';
+                const { managers, contracts } = _.reduce(
+                    teams,
+                    (r, TeamId) => {
+                        const teamId = TeamCache.get(TeamId);
+                        const managers = _.times(_.random(2, 4), fakePerson);
+                        r.managers = _.concat(r.managers, managers);
+
+                        const date = moment
+                            .utc()
+                            .add(_.random(1, 2), 'year')
+                            .dayOfYear(_.random(1, 365))
+                            .startOf('day');
+
+                        const contracts = _.map(managers, manager => {
+                            const managerId = manager._id;
+                            const endDate = date.toDate();
+                            const startDate = date
+                                .subtract(_.random(2, 4), 'year')
+                                .dayOfYear(_.random(1, 365))
+                                .toDate();
+
+                            return {
+                                type: 'contract',
+                                contractType,
+                                teamId,
+                                managerId,
+                                startDate,
+                                endDate,
+                            };
+                        });
+                        r.contracts = _.concat(r.contracts, contracts);
+
+                        return r;
+                    },
+                    { managers: [], contracts: [] }
+                );
+
+                const month = moment
+                    .utc()
+                    .startOf('month')
+                    .subtract(1, 'month');
+                const awards = _.times(30, i => {
+                    const awardType = 'ManagerOfTheMonthAward';
+                    const date = month.clone().subtract(i, 'month');
+
+                    const managerId = _.chain(contracts)
+                        .filter(contract =>
+                            date.isBetween(
+                                contract.startDate,
+                                contract.endDate,
+                                'month'
+                            )
+                        )
+                        .sample()
+                        .get('managerId')
+                        .value();
+
+                    return {
+                        type: 'award',
+                        awardType,
+                        managerId,
+                        date: date.toDate(),
+                    };
+                });
+
+                return dbs.football
+                    .get('people')
+                    .insert(_.concat(managers, contracts, awards))
+                    .then(() =>
+                        spinner.succeed(
+                            `Generated ${_.size(
+                                managers
+                            )} managers and ${_.size(
+                                contracts
+                            )} contracts and ${_.size(awards)} awards`
+                        )
+                    );
+            },
+        ],
+        players: [
+            'memberships',
+            ({ memberships }) => {
+                const PlayerIds = _.uniq(_.map(memberships, 'PlayerId'));
+
+                const spinner = ora().start(
+                    `Coverting ${_.size(PlayerIds)} players`
+                );
+
+                const task = dbs.fantasy
+                    .get('players')
+                    .find({ PlayerId: { $in: PlayerIds } })
+                    .then(PlayersConverter);
+
+                return Promise.resolve(task).tap(r =>
+                    spinner.succeed(`Created ${_.size(r)} players`)
+                );
+            },
+        ],
+        contracts: [
+            'memberships',
+            'players',
+            ({ memberships }) => ContractsConverter(memberships),
+        ],
+        games: [
+            'competitions',
+            'players',
+            results => {
+                const RoundIds = _.get(results, ['competitions', 'RoundIds']);
+
+                return Promise.mapSeries(RoundIds, RoundId => {
+                    const spinner = ora().start(
+                        `Loading games for round ${RoundId}`
+                    );
+                    const task = dbs.fantasy
+                        .get('boxScores')
+                        .find({ 'Game.RoundId': RoundId });
+                    return Promise.resolve(task)
+                        .tap(r => {
+                            spinner.text = `Converting ${_.size(r)} games`;
+                        })
+                        .then(GamesConverter)
+                        .tap(r =>
+                            spinner.succeed(`Created ${_.size(r[0])} games`)
+                        );
+                });
+            },
+        ],
+    });
+
+    return Promise.resolve(tasks).finally(dbs.close);
+};
+
+module.exports = convert;
