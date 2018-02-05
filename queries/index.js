@@ -22,6 +22,7 @@ const working = [
     'a',
     'b',
     'c',
+    'd',
     'e',
     'f',
     'g',
@@ -29,16 +30,20 @@ const working = [
     'i',
     'j',
     'k',
+    'l',
+    'm',
     'n',
     'o',
     'uc 3',
+    'uc 4',
+    'uc 5',
 ];
 
 Promise.resolve(all(working))
     .mapSeries(({ description, command, id }) => {
         const info = `${id}):`;
         if (_.isEmpty(command)) {
-            ora().warn(`${info} Is empty, skipping ...`);
+            ora().warn(`${info} ${description} is empty, skipping ...`);
             return null;
         }
 
@@ -51,11 +56,12 @@ Promise.resolve(all(working))
                 } else {
                     spinner.succeed();
                 }
-                // spinner.info(JSON.stringify(batch, null, 2));
+                spinner.info(JSON.stringify(batch, null, 2));
             })
             .catch(err => {
                 spinner.fail();
                 console.error(err);
-            });
+            })
+            .finally(() => console.log());
     })
     .finally(() => db.close());

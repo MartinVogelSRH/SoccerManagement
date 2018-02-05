@@ -7,8 +7,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                firstName: 'Junior',
-                lastName: 'Stanislas',
+                firstName: 'Ralf',
+                lastName: 'Fährmann',
             },
         },
         {

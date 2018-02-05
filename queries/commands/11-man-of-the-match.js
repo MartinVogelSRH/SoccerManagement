@@ -28,7 +28,7 @@ module.exports = {
                                     {
                                         $eq: [
                                             '$awardType',
-                                            'manOfTheMatchAward',
+                                            'ManOfTheMatchAward',
                                         ],
                                     },
                                 ],
