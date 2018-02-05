@@ -7,9 +7,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                _id: ObjectId('5a76e61e3d9ea10b4b03af93'),
-                firstName: 'Dan',
-                lastName: 'Gosling',
+                firstName: 'Lukas',
+                lastName: 'Hinterseer',
             },
         },
         {

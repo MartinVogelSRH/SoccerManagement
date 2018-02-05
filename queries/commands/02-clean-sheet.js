@@ -1,14 +1,13 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
+const { ISODate } = require('./utils');
 
 module.exports = {
     aggregate: 'teams',
     pipeline: [
         {
             $match: {
-                _id: ObjectId('5a71931a697c49295702bed4'),
-                name: 'Colombia',
+                name: '1. FC Köln',
             },
         },
         {

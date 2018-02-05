@@ -5,7 +5,7 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'AFC Bournemouth',
+                name: 'FC Augsburg',
             },
         },
         {

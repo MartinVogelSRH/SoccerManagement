@@ -5,7 +5,7 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                description: 'Goal',
+                eventType: 'Goal',
                 additionalPlayerId: {
                     $exists: true,
                 },
@@ -14,6 +14,7 @@ module.exports = {
         {
             $sortByCount: '$additionalPlayerId',
         },
+        { $limit: 5 },
         {
             $lookup: {
                 from: 'people',

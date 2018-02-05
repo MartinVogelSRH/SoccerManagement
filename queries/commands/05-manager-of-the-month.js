@@ -1,15 +1,12 @@
 'use strict';
 
-const { ObjectId } = require('./utils');
-
 module.exports = {
     aggregate: 'people',
     pipeline: [
         {
             $match: {
-                _id: ObjectId('5a75d1d62d70092d98535c9b'),
-                firstName: 'Albin',
-                lastName: 'Neubauer',
+                firstName: 'Ivory',
+                lastName: 'Langosh',
             },
         },
         {
@@ -31,7 +28,7 @@ module.exports = {
                                     {
                                         $eq: [
                                             '$awardType',
-                                            'managerOfTheMonthAward',
+                                            'ManagerOfTheMonthAward',
                                         ],
                                     },
                                 ],

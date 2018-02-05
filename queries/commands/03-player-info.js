@@ -7,19 +7,32 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                lastName: 'Mustermann',
+                firstName: 'Nickolas',
+                lastName: 'Barrows',
             },
         },
         {
             $lookup: {
-                from: 'marketvalueupdate',
+                from: 'people',
                 let: { player_id: '$_id' },
                 pipeline: [
                     {
                         $match: {
                             $expr: {
-                                $eq: ['$playerId', '$$player_id'],
+                                $and: [
+                                    {
+                                        $eq: ['$type', 'marketvalue'],
+                                    },
+                                    {
+                                        $eq: ['$playerId', '$$player_id'],
+                                    },
+                                ],
                             },
+                        },
+                    },
+                    {
+                        $sort: {
+                            date: -1,
                         },
                     },
                     {
@@ -33,13 +46,16 @@ module.exports = {
         },
         {
             $lookup: {
-                from: 'contracts',
+                from: 'people',
                 let: { player_id: '$_id' },
                 pipeline: [
                     {
                         $match: {
                             $expr: {
                                 $and: [
+                                    {
+                                        $eq: ['$contractType', 'player'],
+                                    },
                                     {
                                         $eq: ['$playerId', '$$player_id'],
                                     },
@@ -69,7 +85,7 @@ module.exports = {
                     $trunc: {
                         $divide: [
                             {
-                                $subtract: [ISODate(), '$dateofbirth'],
+                                $subtract: [ISODate(), '$dateOfBirth'],
                             },
                             31536000000,
                         ],

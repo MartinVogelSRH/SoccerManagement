@@ -8,13 +8,35 @@ const ora = require('ora');
 
 const commands = require('./commands');
 
-const db = mongojs('football-database');
+const db = mongojs('bundesliga-database');
 const run = command =>
     Promise.fromCallback(callback => db.runCommand(command, callback));
 
-Promise.resolve([_.nth(commands, 15)])
-    .mapSeries(({ description, command }, index) => {
-        const info = `Command #${index + 1}:`;
+const all = () => commands;
+const one = id => [_.find(commands, ['id', id])];
+const some = ids => _.filter(commands, command => _.includes(ids, command.id));
+const exclude = ids =>
+    _.reject(commands, command => _.includes(ids, command.id));
+
+const working = [
+    'a',
+    'b',
+    'c',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'n',
+    'o',
+    'uc 3',
+];
+
+Promise.resolve(all(working))
+    .mapSeries(({ description, command, id }) => {
+        const info = `${id}):`;
         if (_.isEmpty(command)) {
             ora().warn(`${info} Is empty, skipping ...`);
             return null;
@@ -24,9 +46,16 @@ Promise.resolve([_.nth(commands, 15)])
         return run(command)
             .then(r => {
                 const batch = _.get(r, ['cursor', 'firstBatch']);
-                spinner.succeed();
-                spinner.info(JSON.stringify(batch, null, 2));
+                if (_.isEmpty(batch)) {
+                    spinner.fail();
+                } else {
+                    spinner.succeed();
+                }
+                // spinner.info(JSON.stringify(batch, null, 2));
             })
-            .catch(err => spinner.fail(`${info} ${err.message}`));
+            .catch(err => {
+                spinner.fail();
+                console.error(err);
+            });
     })
     .finally(() => db.close());

@@ -1,6 +1,6 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
+const { ObjectId, ISODate, FCB } = require('./utils');
 
 module.exports = {
     aggregate: 'games',
@@ -12,29 +12,23 @@ module.exports = {
                         {
                             $or: [
                                 {
-                                    $eq: [
-                                        '$awayTeamId',
-                                        ObjectId('5a76e6133d9ea10b4b03af19'),
-                                    ],
+                                    $eq: ['$awayTeamId', ObjectId(FCB)],
                                 },
                                 {
-                                    $eq: [
-                                        '$homeTeamId',
-                                        ObjectId('5a76e6133d9ea10b4b03af19'),
-                                    ],
+                                    $eq: ['$homeTeamId', ObjectId(FCB)],
                                 },
                             ],
                         },
                         {
                             $gte: [
                                 '$startDate',
-                                ISODate('2016-08-14 02:00:00.000'),
+                                ISODate('2015-06-13 00:00:00.000'),
                             ],
                         },
                         {
                             $lte: [
                                 '$startDate',
-                                ISODate('2017-05-29 02:00:00.000'),
+                                ISODate('2016-06-13 00:00:00.000'),
                             ],
                         },
                     ],

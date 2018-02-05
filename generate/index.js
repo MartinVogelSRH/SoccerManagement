@@ -380,8 +380,8 @@ const GamesConverter = BoxScores => {
                 })
                 .value(),
         teamStatistics: (gameId, TeamGames) => {
-            const position = _.random(50, 70);
-            const possessions = [position, 100 - position];
+            const max = _.random(50, 70);
+            const min = 100 - max;
             return _.map(TeamGames, (fantasy, i) => {
                 const statistic = {};
                 statistic.type = 'statistic';
@@ -389,6 +389,7 @@ const GamesConverter = BoxScores => {
                 statistic.teamId = TeamCache.get(fantasy.TeamId);
 
                 statistic.possession = possessions[i];
+                statistic.fantasy = fantasy;
                 return _.assign(statistic, parser.stats(fantasy));
             });
         },
@@ -422,6 +423,7 @@ const GamesConverter = BoxScores => {
 
                 statistic.started = fantasy.Started > 0;
                 statistic.minutes = _.round(fantasy.Minutes);
+                statistic.fantasy = fantasy;
                 if (statistic.minutes <= 0) {
                     return statistic;
                 }
@@ -429,6 +431,7 @@ const GamesConverter = BoxScores => {
                 if (statistic.minutes > game.gameTime) {
                     statistic.minutes = game.gameTime;
                 }
+                statistic.positionCategory = fantasy.PositionCategory;
                 statistic.position = _.sample(positions[fantasy.Position]);
                 return _.assign(statistic, parser.stats(fantasy));
             });
@@ -454,30 +457,32 @@ const GamesConverter = BoxScores => {
 
     const { games, events, statistics, awards } = _.reduce(
         BoxScores,
-        (reduced, BoxScores) => {
-            const max = _.maxBy(BoxScores.PlayerGames, 'Minutes');
+        (reduced, BoxScore) => {
+            const max = _.maxBy(BoxScore.PlayerGames, 'Minutes');
             let minutes = _.round(max.Minutes);
             if (minutes < 90) {
                 minutes = 90;
+            } else {
+                minutes = _.random(90, minutes);
             }
-            const game = converters.game(BoxScores.Game, minutes);
+            const game = converters.game(BoxScore.Game, minutes);
             reduced.games.push(game);
 
             reduced.events = _.concat(
                 reduced.events,
-                converters.goals(game._id, BoxScores.Goals),
-                converters.cards(game._id, BoxScores.Bookings),
-                converters.substitutions(game._id, BoxScores.Lineups)
+                converters.goals(game._id, BoxScore.Goals),
+                converters.cards(game._id, BoxScore.Bookings),
+                converters.substitutions(game._id, BoxScore.Lineups)
             );
 
             reduced.statistics = _.concat(
                 reduced.statistics,
-                converters.teamStatistics(game._id, BoxScores.TeamGames),
-                converters.playerStatistics(game, BoxScores.PlayerGames)
+                converters.teamStatistics(game._id, BoxScore.TeamGames),
+                converters.playerStatistics(game, BoxScore.PlayerGames)
             );
 
             reduced.awards.push(
-                converters.award(game._id, BoxScores.Game, BoxScores.Lineups)
+                converters.award(game._id, BoxScore.Game, BoxScore.Lineups)
             );
 
             return reduced;

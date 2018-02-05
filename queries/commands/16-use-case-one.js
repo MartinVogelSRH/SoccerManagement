@@ -1,64 +1,119 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
-
-const defenders = [
-    'Centre Back',
-    'Left Back',
-    'Right Back',
-    'Left Wing Back',
-    'Right Wing Back',
-];
-
 module.exports = {
-    aggregate: 'statistics',
+    aggregate: 'competitions',
     pipeline: [
         {
             $match: {
-                type: 'statistic',
-                position: { $in: defenders },
+                name: 'Bundesliga',
+                season: '2016/2017',
             },
         },
-        { $group: { _id: '$playerId' } },
+        {
+            $lookup: {
+                from: 'games',
+                localField: '_id',
+                foreignField: 'competitionId',
+                as: 'games',
+            },
+        },
+        { $limit: 1 },
+        {
+            $unwind: '$games',
+        },
+        { $replaceRoot: { newRoot: '$games' } },
         {
             $lookup: {
                 from: 'statistics',
-                let: {
-                    playerId: '$_id',
-                },
+                let: { gameId: '_id' },
                 pipeline: [
                     {
                         $match: {
                             $expr: {
                                 $and: [
+                                    { $eq: ['$gameId', '$$gameId'] },
+                                    { $eq: ['$type', 'statistic'] },
                                     {
-                                        $eq: ['$type', 'event'],
-                                    },
-                                    {
-                                        $eq: ['$eventType', 'Goal'],
-                                    },
-                                    {
-                                        $eq: ['$playerId', '$$playerId'],
+                                        $in: [
+                                            '$position',
+                                            [
+                                                'Centre Back',
+                                                'Left Back',
+                                                'Right Back',
+                                                'Left Wing Back',
+                                                'Right Wing Back',
+                                            ],
+                                        ],
                                     },
                                 ],
                             },
                         },
                     },
+                    { $limit: 5 },
+                    {
+                        $lookup: {
+                            from: 'statistics',
+                            let: { gameId: '$$gameId', playerId: '$playerId' },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $and: [
+                                                {
+                                                    $eq: [
+                                                        '$gameId',
+                                                        '$$gameId',
+                                                    ],
+                                                },
+                                                { $eq: ['$type', 'event'] },
+                                                {
+                                                    $eq: [
+                                                        '$playerId',
+                                                        '$$playerId',
+                                                    ],
+                                                },
+                                                {
+                                                    $in: [
+                                                        '$eventType',
+                                                        [
+                                                            'Goal',
+                                                            'Penalty Goal',
+                                                        ],
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    },
+                                },
+                            ],
+                            as: 'Goals',
+                        },
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            playerId: 1,
+                            goals: {
+                                $size: '$Goals',
+                            },
+                        },
+                    },
                 ],
-                as: 'goals',
-            },
-        },
-        { $group: { _id: '$_id', goals: { $sum: 1 } } },
-        {
-            $sort: {
-                goals: -1,
+                as: 'playerStats',
             },
         },
         {
-            $limit: 5,
+            $unwind: '$playerStats',
+        },
+        { $replaceRoot: { newRoot: '$playerStats' } },
+        {
+            $sort: { goals: -1 },
+        },
+        {
+            $limit: 2,
         },
     ],
     cursor: {
-        batchSize: 50,
+        batchSize: 200,
     },
 };

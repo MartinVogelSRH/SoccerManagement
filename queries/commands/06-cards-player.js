@@ -1,27 +1,60 @@
 'use strict';
 
-const { ObjectId } = require('./utils');
-
 module.exports = {
-    aggregate: 'statistics',
+    aggregate: 'people',
     pipeline: [
         {
             $match: {
-                playerId: ObjectId('5a71be6dbaca8167df6793e2'),
-                description: { $regex: /Card$/, $options: 'i' },
+                lastName: 'Alonso Olana',
             },
         },
         {
             $lookup: {
                 from: 'people',
-                localField: 'playerId',
-                foreignField: '_id',
+                localField: 'lastName',
+                foreignField: 'lastName',
                 as: 'Player',
             },
         },
         {
+            $lookup: {
+                from: 'statistics',
+                let: {
+                    playerId: '$_id',
+                    lastName: '$lastName',
+                    firstName: '$firstName',
+                },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $eq: ['$playerId', '$$playerId'],
+                            },
+                        },
+                    },
+                    {
+                        $project: {
+                            lastName: '$$lastName',
+                            firstName: '$$firstName',
+                            eventType: '$eventType',
+                        },
+                    },
+                ],
+                as: 'Cards',
+            },
+        },
+        {
+            $unwind: '$Cards',
+        },
+        { $replaceRoot: { newRoot: '$Cards' } },
+        {
+            $match: {
+                eventType: { $regex: /Card$/, $options: 'i' },
+            },
+        },
+        {
             $group: {
-                _id: { Player: '$Player', card: '$description' },
+                _id: { Player: '$lastName', Cards: '$eventType' },
                 count: { $sum: 1 },
             },
         },

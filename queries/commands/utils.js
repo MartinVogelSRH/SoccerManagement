@@ -1,6 +1,14 @@
 'use strict';
 
 const { ObjectId } = require('mongojs');
-const ISODate = date => new Date(date);
+const ISODate = date => {
+    if (date) {
+        return new Date(date);
+    }
+    const now = Date.now();
+    return new Date(now);
+};
 
-module.exports = { ObjectId, ISODate };
+const FCB = '5a7833cbafe5871e2059ca8b';
+
+module.exports = { ObjectId, ISODate, FCB };
