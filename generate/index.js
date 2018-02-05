@@ -13,7 +13,7 @@ const ora = require('ora');
 const dbs = {
     fantasy: monk(config.get('databases.fantasy')),
     football: monk(config.get('databases.football')),
-    close: () => Promise.all([dbs.fantasy.close(), dbs.football.close()]),
+    close: () => Promise.all([dbs.fantasy.close(), dbs.football.close()])
 };
 
 const fantasyStatKeys = [
@@ -28,7 +28,7 @@ const fantasyStatKeys = [
     'Passes',
     'PassesCompleted',
     'BlockedShots',
-    'Touches',
+    'Touches'
 ];
 const parser = {
     date: date => moment.utc(_.replace(date, /T.*$/, '')).toDate(),
@@ -43,7 +43,7 @@ const parser = {
                 return stat;
             },
             {}
-        ),
+        )
 };
 
 const fakePerson = () => {
@@ -56,6 +56,7 @@ const fakePerson = () => {
         .utc()
         .subtract(_.random(40, 60), 'years')
         .dayOfYear(_.random(365))
+        .startOf('day')
         .toDate();
 
     return { _id, firstName, lastName, nationality, dateOfBirth };
@@ -67,7 +68,7 @@ const SeasonCache = {
     set: (SeasonId, _id) => {
         SeasonCache.cache[SeasonId] = _id;
         return _id;
-    },
+    }
 };
 const RoundCache = {
     cache: {},
@@ -75,7 +76,7 @@ const RoundCache = {
     set: (RoundId, _id) => {
         RoundCache.cache[RoundId] = _id;
         return _id;
-    },
+    }
 };
 
 const CompetitionsConverter = Competitions => {
@@ -128,7 +129,7 @@ const TeamCache = {
     set: (TeamId, _id) => {
         TeamCache.cache[TeamId] = _id;
         return _id;
-    },
+    }
 };
 const TeamsConverter = Teams => {
     const teams = _.map(Teams, Team => {
@@ -162,7 +163,7 @@ const PlayerCache = {
     set: (PlayerId, _id) => {
         PlayerCache.cache[PlayerId] = _id;
         return _id;
-    },
+    }
 };
 const PlayersConverter = Players => {
     const type = 'person';
@@ -203,7 +204,7 @@ const ContractsConverter = Memberships => {
 
             const dates = {
                 min: moment.utc(),
-                max: moment.utc().subtract(100, 'years'),
+                max: moment.utc().subtract(100, 'years')
             };
             const playerContracts = _.map(playerMemberships, fantasy => {
                 const contract = { playerId };
@@ -278,7 +279,7 @@ const ContractsConverter = Memberships => {
                     agentId,
                     playerId: monk.id(playerId),
                     startDate,
-                    endDate,
+                    endDate
                 };
             });
 
@@ -401,7 +402,7 @@ const GamesConverter = BoxScores => {
                     'Left Back',
                     'Right Back',
                     'Left Wing Back',
-                    'Right Wing Back',
+                    'Right Wing Back'
                 ],
                 M: [
                     'Defensive Midfield',
@@ -409,9 +410,9 @@ const GamesConverter = BoxScores => {
                     'Attacking Midfield',
                     'Left Wing',
                     'Right Wing',
-                    'Left Midfield',
+                    'Left Midfield'
                 ],
-                A: ['Centre Forward', 'Withdrawn Striker'],
+                A: ['Centre Forward', 'Withdrawn Striker']
             };
 
             return _.map(PlayerGames, fantasy => {
@@ -452,7 +453,7 @@ const GamesConverter = BoxScores => {
             const playerId = PlayerCache.get(player.PlayerId);
 
             return { type, awardType, gameId, playerId };
-        },
+        }
     };
 
     const { games, events, statistics, awards } = _.reduce(
@@ -491,14 +492,14 @@ const GamesConverter = BoxScores => {
             games: [],
             events: [],
             statistics: [],
-            awards: [],
+            awards: []
         }
     );
 
     return Promise.all([
         dbs.football.get('games').insert(games),
         dbs.football.get('statistics').insert(_.concat(events, statistics)),
-        dbs.football.get('people').insert(awards),
+        dbs.football.get('people').insert(awards)
     ]);
 };
 
@@ -535,15 +536,15 @@ const convert = areas => {
                             $and: [
                                 {
                                     'Competitions.Seasons.Rounds.RoundId': {
-                                        $exists: true,
-                                    },
+                                        $exists: true
+                                    }
                                 },
                                 {
                                     'Competitions.Seasons.Rounds.RoundId': {
-                                        $nin: RoundIds,
-                                    },
-                                },
-                            ],
+                                        $nin: RoundIds
+                                    }
+                                }
+                            ]
                         })
                     );
             }
@@ -586,6 +587,9 @@ const convert = areas => {
                                         SeasonCache.get(SeasonId)
                                     )
                                     .mapValues(group =>
+                                        _.uniqBy(group, 'TeamId')
+                                    )
+                                    .mapValues(group =>
                                         _.map(group, ({ TeamId }) =>
                                             TeamCache.get(TeamId)
                                         )
@@ -608,12 +612,12 @@ const convert = areas => {
                             .then(() => TeamIds);
                     })
                     .tap(r => spinner.succeed(`Created ${_.size(r)} teams`));
-            },
+            }
         ],
         memberships: [
             'teams',
             ({ teams }) =>
-                dbs.fantasy.get('memberships').find({ TeamId: { $in: teams } }),
+                dbs.fantasy.get('memberships').find({ TeamId: { $in: teams } })
         ],
         managers: [
             'teams',
@@ -650,7 +654,7 @@ const convert = areas => {
                                 teamId,
                                 managerId,
                                 startDate,
-                                endDate,
+                                endDate
                             };
                         });
                         r.contracts = _.concat(r.contracts, contracts);
@@ -684,7 +688,7 @@ const convert = areas => {
                         type: 'award',
                         awardType,
                         managerId,
-                        date: date.toDate(),
+                        date: date.toDate()
                     };
                 });
 
@@ -700,7 +704,7 @@ const convert = areas => {
                             )} contracts and ${_.size(awards)} awards`
                         )
                     );
-            },
+            }
         ],
         players: [
             'memberships',
@@ -719,12 +723,12 @@ const convert = areas => {
                 return Promise.resolve(task).tap(r =>
                     spinner.succeed(`Created ${_.size(r)} players`)
                 );
-            },
+            }
         ],
         contracts: [
             'memberships',
             'players',
-            ({ memberships }) => ContractsConverter(memberships),
+            ({ memberships }) => ContractsConverter(memberships)
         ],
         games: [
             'competitions',
@@ -748,8 +752,8 @@ const convert = areas => {
                             spinner.succeed(`Created ${_.size(r[0])} games`)
                         );
                 });
-            },
-        ],
+            }
+        ]
     });
 
     return Promise.resolve(tasks).finally(dbs.close);

@@ -37,10 +37,10 @@ const working = [
     'o',
     'uc 3',
     'uc 4',
-    'uc 5',
+    'uc 5'
 ];
 
-Promise.resolve(all(working))
+Promise.resolve(one('uc 2'))
     .mapSeries(({ description, command, id }) => {
         const info = `${id}):`;
         if (_.isEmpty(command)) {
@@ -60,7 +60,7 @@ Promise.resolve(all(working))
                 } else {
                     spinner.succeed();
                 }
-                // spinner.info(JSON.stringify(batch, null, 2));
+                spinner.info(JSON.stringify(batch, null, 2));
             })
             .catch(err => {
                 spinner.fail();

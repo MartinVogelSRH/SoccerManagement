@@ -33,4 +33,4 @@ const removeFanatsy = database => {
         .catch(() => spinner.fail(`Failed to connect to ${database}`));
 };
 
-removeFanatsy('localhost/bundesliga-database');
+removeFanatsy('localhost/football-database');
