@@ -5,25 +5,14 @@ module.exports = {
     pipeline: [
         {
             $match: {
+                firstName: 'Xabier ',
                 lastName: 'Alonso Olana'
             }
         },
         {
             $lookup: {
-                from: 'people',
-                localField: 'lastName',
-                foreignField: 'lastName',
-                as: 'Player'
-            }
-        },
-        {
-            $lookup: {
                 from: 'statistics',
-                let: {
-                    playerId: '$_id',
-                    lastName: '$lastName',
-                    firstName: '$firstName'
-                },
+                let: { playerId: '$_id', lastName: '$lastName', firstName: '$firstName' },
                 pipeline: [
                     {
                         $match: {
@@ -34,6 +23,7 @@ module.exports = {
                     },
                     {
                         $project: {
+                            playerId: '$$playerId',
                             lastName: '$$lastName',
                             firstName: '$$firstName',
                             eventType: '$eventType'
@@ -49,17 +39,16 @@ module.exports = {
         { $replaceRoot: { newRoot: '$Cards' } },
         {
             $match: {
+                // i --> ignores casesensitivity
                 eventType: { $regex: /Card$/, $options: 'i' }
             }
         },
         {
             $group: {
-                _id: { Player: '$lastName', Cards: '$eventType' },
+                _id: { firstName: '$firstName', lastName: '$lastName', Cards: '$eventType' },
                 count: { $sum: 1 }
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

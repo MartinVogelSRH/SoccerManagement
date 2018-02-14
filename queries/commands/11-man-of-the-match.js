@@ -5,18 +5,14 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                firstName: 'Paweł',
-                lastName: 'Olkowski'
+                firstName: 'Thomas',
+                lastName: 'Müller'
             }
         },
         {
             $lookup: {
                 from: 'people',
-                let: {
-                    player_ID: '$_id',
-                    firstName: '$firstName',
-                    lastName: '$lastName'
-                },
+                let: { player_ID: '$_id', firstName: '$firstName', lastName: '$lastName' },
                 pipeline: [
                     {
                         $match: {
@@ -26,10 +22,7 @@ module.exports = {
                                         $eq: ['$playerId', '$$player_ID']
                                     },
                                     {
-                                        $eq: [
-                                            '$awardType',
-                                            'ManOfTheMatchAward'
-                                        ]
+                                        $eq: ['$awardType', 'ManOfTheMatchAward']
                                     }
                                 ]
                             }
@@ -57,7 +50,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

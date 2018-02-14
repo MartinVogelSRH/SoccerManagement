@@ -11,8 +11,7 @@ module.exports = [
     },
     {
         id: 'c',
-        description:
-            'Player Name, Player Age, Market value, Current club – player (each year)',
+        description: 'Player Name, Player Age, Market value, Current club – player (each year)',
         command: require('./03-player-info')
     },
     {
@@ -73,33 +72,32 @@ module.exports = [
     },
     {
         id: 'o',
-        description:
-            'Signing a striker for the best fitting - club (all stats)',
+        description: 'Signing a striker for the best fitting - club (all stats)',
         command: require('./15-signing-striker')
     },
     {
         id: 'uc 1',
-        description: 'Use Case 1',
+        description: 'Most goals from a striker',
         command: require('./16-use-case-one')
     },
     {
         id: 'uc 2',
-        description: 'Use Case 2',
+        description: 'Top 5 fouling player',
         command: require('./17-use-case-two')
     },
     {
         id: 'uc 3',
-        description: 'Use Case 3',
+        description: 'Club statistics',
         command: require('./18-use-case-three')
     },
     {
         id: 'uc 4',
-        description: 'Use Case 4',
+        description: 'Player information',
         command: require('./19-use-case-four')
     },
     {
         id: 'uc 5',
-        description: 'Use Case 5',
+        description: 'Top 10 yellow cards',
         command: require('./20-use-case-five')
     }
 ];

@@ -9,18 +9,8 @@ module.exports = {
             $match: {
                 $expr: {
                     $and: [
-                        {
-                            $gte: [
-                                '$startDate',
-                                ISODate('2018-01-22T00:00:00.166Z')
-                            ]
-                        },
-                        {
-                            $lte: [
-                                '$endDate',
-                                ISODate('2018-01-28T23:59:59.166Z')
-                            ]
-                        }
+                        { $gte: ['$startDate', ISODate('2018-01-22T00:00:00.166Z')] },
+                        { $lte: ['$endDate', ISODate('2018-01-28T23:59:59.166Z')] }
                     ]
                 }
             }
@@ -36,15 +26,7 @@ module.exports = {
                                 $and: [
                                     { $eq: ['$gameId', '$$gameId'] },
                                     { $eq: ['$type', 'statistic'] },
-                                    {
-                                        $in: [
-                                            '$position',
-                                            [
-                                                'Centre Forward',
-                                                'Withdrawn Striker'
-                                            ]
-                                        ]
-                                    }
+                                    { $in: ['$position', ['Centre Forward', 'Withdrawn Striker']] }
                                 ]
                             }
                         }
@@ -58,22 +40,10 @@ module.exports = {
                                     $match: {
                                         $expr: {
                                             $and: [
-                                                {
-                                                    $eq: ['$gameId', '$$gameId']
-                                                },
+                                                { $eq: ['$gameId', '$$gameId'] },
                                                 { $eq: ['$type', 'event'] },
-                                                {
-                                                    $eq: [
-                                                        '$playerId',
-                                                        '$$playerId'
-                                                    ]
-                                                },
-                                                {
-                                                    $in: [
-                                                        '$eventType',
-                                                        ['Goal', 'Penalty Goal']
-                                                    ]
-                                                }
+                                                { $eq: ['$playerId', '$$playerId'] },
+                                                { $in: ['$eventType', ['Goal', 'Penalty Goal']] }
                                             ]
                                         }
                                     }
@@ -103,10 +73,7 @@ module.exports = {
                                         input: '$Goals',
                                         as: 'ev',
                                         cond: {
-                                            $eq: [
-                                                '$$ev.eventType',
-                                                'Penalty Goal'
-                                            ]
+                                            $eq: ['$$ev.eventType', 'Penalty Goal']
                                         }
                                     }
                                 }
@@ -161,30 +128,16 @@ module.exports = {
                 minutes: '$minutes',
                 games: '$games',
                 goals: '$goals',
-                penatlyGoals: '$penaltyGoals',
+                penaltyGoals: '$penaltyGoals',
                 minutespergoal: {
-                    $cond: [
-                        { $gt: ['$goals', 0] },
-                        { $divide: ['$minutes', '$goals'] },
-                        0
-                    ]
+                    $cond: [{ $gt: ['$goals', 0] }, { $divide: ['$minutes', '$goals'] }, 0]
                 },
                 minutespergame: {
-                    $cond: [
-                        { $gt: ['$minutes', 0] },
-                        { $divide: ['$games', '$minutes'] },
-                        0
-                    ]
+                    $cond: [{ $gt: ['$minutes', 0] }, { $divide: ['$minutes', '$games'] }, 0]
                 },
                 score: {
                     $sum: [
-                        {
-                            $cond: [
-                                { $gt: ['$goals', 0] },
-                                { $divide: ['$goals', '$games'] },
-                                0
-                            ]
-                        },
+                        { $cond: [{ $gt: ['$goals', 0] }, { $divide: ['$goals', '$games'] }, 0] },
                         {
                             $cond: [
                                 { $gt: ['$shotsOnGoal', 0] },
@@ -214,10 +167,8 @@ module.exports = {
             $sort: { score: -1 }
         },
         {
-            $limit: 10
+            $limit: 5
         }
     ],
-    cursor: {
-        batchSize: 200
-    }
+    cursor: {}
 };

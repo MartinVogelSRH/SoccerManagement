@@ -12,8 +12,22 @@ module.exports = {
         {
             $lookup: {
                 from: 'games',
-                localField: '_id',
-                foreignField: 'competitionId',
+                let: { competition: '$_id' },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $eq: ['$competitionId', '$$competition']
+                            }
+                        }
+                    },
+                    {
+                        $sort: { startDate: -1 }
+                    },
+                    {
+                        $limit: 10
+                    }
+                ],
                 as: 'games'
             }
         },
@@ -21,7 +35,6 @@ module.exports = {
             $unwind: '$games'
         },
         { $replaceRoot: { newRoot: '$games' } },
-        { $limit: 1 },
         {
             $lookup: {
                 from: 'statistics',
@@ -34,13 +47,7 @@ module.exports = {
                                     { $eq: ['$gameId', '$$origGame'] },
                                     { $eq: ['$type', 'statistic'] },
                                     {
-                                        $in: [
-                                            '$position',
-                                            [
-                                                'Centre Forward',
-                                                'Withdrawn Striker'
-                                            ]
-                                        ]
+                                        $in: ['$position', ['Centre Forward', 'Withdrawn Striker']]
                                     }
                                 ]
                             }
@@ -49,34 +56,16 @@ module.exports = {
                     {
                         $lookup: {
                             from: 'statistics',
-                            let: {
-                                origGame: '$$origGame',
-                                playerId: '$playerId'
-                            },
+                            let: { origGame: '$$origGame', playerId: '$playerId' },
                             pipeline: [
                                 {
                                     $match: {
                                         $expr: {
                                             $and: [
-                                                {
-                                                    $eq: [
-                                                        '$gameId',
-                                                        '$$origGame'
-                                                    ]
-                                                },
+                                                { $eq: ['$gameId', '$$origGame'] },
                                                 { $eq: ['$type', 'event'] },
-                                                {
-                                                    $eq: [
-                                                        '$playerId',
-                                                        '$$playerId'
-                                                    ]
-                                                },
-                                                {
-                                                    $in: [
-                                                        '$eventType',
-                                                        ['Goal', 'Penalty Goal']
-                                                    ]
-                                                }
+                                                { $eq: ['$playerId', '$$playerId'] },
+                                                { $in: ['$eventType', ['Goal', 'Penalty Goal']] }
                                             ]
                                         }
                                     }
@@ -106,10 +95,24 @@ module.exports = {
             $sort: { goals: -1 }
         },
         {
-            $limit: 5
+            $limit: 1
+        },
+        {
+            $lookup: {
+                from: 'people',
+                foreignField: '_id',
+                localField: 'playerId',
+                as: 'player'
+            }
+        },
+        {
+            $project: {
+                'player.firstName': 1,
+                'player.lastName': 1,
+                'player.nationality': 1,
+                goals: 1
+            }
         }
     ],
-    cursor: {
-        batchSize: 200
-    }
+    cursor: {}
 };

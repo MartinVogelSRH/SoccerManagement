@@ -72,20 +72,14 @@ module.exports = {
                     {
                         $lookup: {
                             from: 'teams',
-                            foreignField: '_id',
                             localField: 'teamId',
+                            foreignField: '_id',
                             as: 'team'
                         }
                     },
                     {
                         $project: {
-                            _id: 0,
-                            playerId: 0,
-                            type: 0,
-                            contractType: 0,
-                            teamId: 0,
-                            'team._id': 0,
-                            'team.fantasy': 0
+                            _id: 0
                         }
                     }
                 ],
@@ -101,7 +95,7 @@ module.exports = {
                             {
                                 $subtract: [ISODate(), '$dateOfBirth']
                             },
-                            31536000000
+                            31536000000 // ms per year
                         ]
                     }
                 },
@@ -112,7 +106,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

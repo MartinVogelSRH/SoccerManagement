@@ -1,330 +1,63 @@
-### ✔ a) Average attendance - club (last season)
+### ✔ a) Average attendance - club (last season) (8.66 ms)
 
 ```json
 [
     {
-        "_id": "5a7833d7afe5871e2059f90e",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca8d",
-        "gameTime": 101,
-        "startDate": "2015-08-14T18:30:00.000Z",
-        "endDate": "2015-08-14T20:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f91c",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca91",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-08-22T13:30:00.000Z",
-        "endDate": "2015-08-22T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f929",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca93",
-        "gameTime": 101,
-        "startDate": "2015-08-29T16:30:00.000Z",
-        "endDate": "2015-08-29T18:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f92e",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca8a",
-        "gameTime": 101,
-        "startDate": "2015-09-12T13:30:00.000Z",
-        "endDate": "2015-09-12T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f935",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca9b",
-        "gameTime": 101,
-        "startDate": "2015-09-22T18:00:00.000Z",
-        "endDate": "2015-09-22T19:56:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f940",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca99",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-09-19T13:30:00.000Z",
-        "endDate": "2015-09-19T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f94b",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca92",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-09-26T13:30:00.000Z",
-        "endDate": "2015-09-26T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f94f",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca94",
-        "gameTime": 101,
-        "startDate": "2015-10-04T15:30:00.000Z",
-        "endDate": "2015-10-04T17:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f959",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca90",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-10-17T13:30:00.000Z",
-        "endDate": "2015-10-17T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f95f",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca95",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-10-30T19:30:00.000Z",
-        "endDate": "2015-10-30T21:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f966",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca88",
-        "gameTime": 101,
-        "startDate": "2015-10-24T13:30:00.000Z",
-        "endDate": "2015-10-24T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f975",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca9a",
-        "gameTime": 101,
-        "startDate": "2015-11-07T14:30:00.000Z",
-        "endDate": "2015-11-07T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f982",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8c",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-11-21T17:30:00.000Z",
-        "endDate": "2015-11-21T19:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f98c",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca98",
-        "gameTime": 101,
-        "startDate": "2015-11-28T14:30:00.000Z",
-        "endDate": "2015-11-28T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f992",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca89",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-12-05T14:30:00.000Z",
-        "endDate": "2015-12-05T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f99a",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca96",
-        "gameTime": 101,
-        "startDate": "2015-12-12T14:30:00.000Z",
-        "endDate": "2015-12-12T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9a2",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca97",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2015-12-19T14:30:00.000Z",
-        "endDate": "2015-12-19T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9a7",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8d",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-01-22T19:30:00.000Z",
-        "endDate": "2016-01-22T21:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9b2",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca91",
-        "gameTime": 101,
-        "startDate": "2016-01-31T16:30:00.000Z",
-        "endDate": "2016-01-31T18:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9bc",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8a",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-02-14T16:30:00.000Z",
-        "endDate": "2016-02-14T18:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9c4",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca93",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-02-06T17:30:00.000Z",
-        "endDate": "2016-02-06T19:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9ce",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca99",
-        "gameTime": 101,
-        "startDate": "2016-02-20T14:30:00.000Z",
-        "endDate": "2016-02-20T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9da",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca92",
-        "gameTime": 101,
-        "startDate": "2016-03-02T19:00:00.000Z",
-        "endDate": "2016-03-02T20:56:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9e1",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca9b",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-02-27T14:30:00.000Z",
-        "endDate": "2016-02-27T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9ec",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca94",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-03-05T17:30:00.000Z",
-        "endDate": "2016-03-05T19:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9f5",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca90",
-        "gameTime": 101,
-        "startDate": "2016-03-12T17:30:00.000Z",
-        "endDate": "2016-03-12T19:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059f9f9",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca88",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-03-19T14:30:00.000Z",
-        "endDate": "2016-03-19T16:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa06",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca95",
-        "gameTime": 101,
-        "startDate": "2016-04-02T13:30:00.000Z",
-        "endDate": "2016-04-02T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa13",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca8c",
-        "gameTime": 101,
-        "startDate": "2016-04-16T16:30:00.000Z",
-        "endDate": "2016-04-16T18:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa17",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca9a",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-04-09T13:30:00.000Z",
-        "endDate": "2016-04-09T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa1f",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca98",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-04-23T13:30:00.000Z",
-        "endDate": "2016-04-23T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa29",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca89",
-        "gameTime": 101,
-        "startDate": "2016-04-30T13:30:00.000Z",
-        "endDate": "2016-04-30T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa36",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca96",
-        "awayTeamId": "5a7833cbafe5871e2059ca8b",
-        "gameTime": 101,
-        "startDate": "2016-05-07T13:30:00.000Z",
-        "endDate": "2016-05-07T15:26:00.000Z"
-    },
-    {
-        "_id": "5a7833d7afe5871e2059fa39",
-        "competitionId": "5a7833cbafe5871e2059ca85",
-        "homeTeamId": "5a7833cbafe5871e2059ca8b",
-        "awayTeamId": "5a7833cbafe5871e2059ca97",
-        "gameTime": 101,
-        "startDate": "2016-05-14T13:30:00.000Z",
-        "endDate": "2016-05-14T15:26:00.000Z"
+        "_id": "5a7833cbafe5871e2059ca88",
+        "type": "Club",
+        "name": "1. FC Köln",
+        "country": "Germany",
+        "city": "Köln",
+        "games": [
+            {
+                "_id": "5a7833cbafe5871e2059ca87",
+                "count": 20,
+                "competition": [
+                    {
+                        "_id": "5a7833cbafe5871e2059ca87",
+                        "type": "Club",
+                        "format": "Domestic League",
+                        "name": "Bundesliga",
+                        "season": "2017/2018",
+                        "country": "Germany",
+                        "startDate": "2017-08-18T00:00:00.000Z",
+                        "endDate": "2018-05-29T00:00:00.000Z"
+                    }
+                ]
+            },
+            {
+                "_id": "5a7833cbafe5871e2059ca86",
+                "count": 34,
+                "competition": [
+                    {
+                        "_id": "5a7833cbafe5871e2059ca86",
+                        "type": "Club",
+                        "format": "Domestic League",
+                        "name": "Bundesliga",
+                        "season": "2016/2017",
+                        "country": "Germany",
+                        "startDate": "2016-08-14T00:00:00.000Z",
+                        "endDate": "2017-05-29T00:00:00.000Z"
+                    }
+                ]
+            }
+        ]
     }
 ]
 ```
 
-### ✔ b) Clean sheet - club (current season)
+### ✔ b) Clean sheet - club (current season) (965 ms)
 
 ```json
 [
     {
-        "_id": {
-            "name": "1. FC Köln"
-        },
-        "count": 34
+        "_id": "1. FC Köln",
+        "count": 6
     }
 ]
 ```
 
-### ✔ c) Player Name, Player Age, Market value, Current club – player (each year)
+### ✔ c) Player Name, Player Age, Market value, Current club – player (each year) (20 ms)
 
 ```json
 [
@@ -401,11 +134,16 @@
         ],
         "contracts": [
             {
+                "playerId": "5a7833d5afe5871e2059cc32",
+                "type": "contract",
+                "contractType": "player",
+                "teamId": "5a7833cbafe5871e2059ca8b",
                 "salary": 42000000,
                 "startDate": "2008-07-01T00:00:00.000Z",
                 "endDate": "2019-01-07T00:00:00.000Z",
                 "team": [
                     {
+                        "_id": "5a7833cbafe5871e2059ca8b",
                         "type": "Club",
                         "name": "FC Bayern München",
                         "country": "Germany",
@@ -419,260 +157,50 @@
 ]
 ```
 
-### ✔ d) Weekly wage bill – club
+### ✔ d) Weekly wage bill – club (9.18 ms)
 
 ```json
 [
     {
-        "bill": 29923061,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Eintracht Frankfurt",
-                "country": "Germany",
-                "city": "Frankfurt am Main"
-            }
-        ]
-    },
-    {
-        "bill": 25499985,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Hannover 96",
-                "country": "Germany",
-                "city": "Hannover"
-            }
-        ]
-    },
-    {
-        "bill": 25288443,
-        "team": [
-            {
-                "type": "Club",
-                "name": "1. FC Köln",
-                "country": "Germany",
-                "city": "Köln"
-            }
-        ]
-    },
-    {
-        "bill": 23634600,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Bayern München",
-                "country": "Germany",
-                "city": "München"
-            }
-        ]
-    },
-    {
-        "bill": 23326906,
-        "team": [
-            {
-                "type": "Club",
-                "name": "TSG 1899 Hoffenheim",
-                "country": "Germany",
-                "city": "Zuzenhausen"
-            }
-        ]
-    },
-    {
-        "bill": 23134601,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Hamburger SV",
-                "country": "Germany",
-                "city": "Hamburg"
-            }
-        ]
-    },
-    {
-        "bill": 22749981,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Borussia Mönchengladbach",
-                "country": "Germany",
-                "city": "Mönchengladbach"
-            }
-        ]
-    },
-    {
-        "bill": 22346143,
-        "team": [
-            {
-                "type": "Club",
-                "name": "VfB Stuttgart",
-                "country": "Germany",
-                "city": "Stuttgart"
-            }
-        ]
-    },
-    {
-        "bill": 22096138,
-        "team": [
-            {
-                "type": "Club",
-                "name": "SC Freiburg",
-                "country": "Germany",
-                "city": "Freiburg"
-            }
-        ]
-    },
-    {
-        "bill": 22076909,
-        "team": [
-            {
-                "type": "Club",
-                "name": "SV Werder Bremen",
-                "country": "Germany",
-                "city": "Bremen"
-            }
-        ]
-    },
-    {
-        "bill": 21865373,
-        "team": [
-            {
-                "type": "Club",
-                "name": "VfL Wolfsburg",
-                "country": "Germany",
-                "city": "Wolfsburg"
-            }
-        ]
-    },
-    {
-        "bill": 20499990,
-        "team": [
-            {
-                "type": "Club",
-                "name": "RB Leipzig",
-                "country": "Germany",
-                "city": "Leipzig"
-            }
-        ]
-    },
-    {
-        "bill": 19557677,
-        "team": [
-            {
-                "type": "Club",
-                "name": "BV Borussia 09 Dortmund",
-                "country": "Germany",
-                "city": "Dortmund"
-            }
-        ]
-    },
-    {
-        "bill": 18961524,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Schalke 04",
-                "country": "Germany",
-                "city": "Gelsenkirchen"
-            }
-        ]
-    },
-    {
-        "bill": 18730757,
-        "team": [
-            {
-                "type": "Club",
-                "name": "1. FSV Mainz 05",
-                "country": "Germany",
-                "city": "Mainz"
-            }
-        ]
-    },
-    {
-        "bill": 18057682,
-        "team": [
-            {
-                "type": "Club",
-                "name": "SV Darmstadt 98",
-                "country": "Germany",
-                "city": "Darmstadt"
-            }
-        ]
-    },
-    {
-        "bill": 17653832,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Hertha BSC",
-                "country": "Germany",
-                "city": "Berlin"
-            }
-        ]
-    },
-    {
-        "bill": 16730757,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Bayer 04 Leverkusen",
-                "country": "Germany",
-                "city": "Leverkusen"
-            }
-        ]
-    },
-    {
-        "bill": 15884604,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Ingolstadt 04",
-                "country": "Germany",
-                "city": "Ingolstadt"
-            }
-        ]
-    },
-    {
-        "bill": 15615372,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Augsburg",
-                "country": "Germany",
-                "city": "Augsburg"
-            }
-        ]
+        "_id": "5a7833cbafe5871e2059ca88",
+        "type": "Club",
+        "name": "1. FC Köln",
+        "country": "Germany",
+        "city": "Köln",
+        "weeklyBill": [25288443]
     }
 ]
 ```
 
-### ✔ e) Manager of the month award – manager
+### ✔ e) Manager of the month award – manager (16 ms)
 
 ```json
 [
     {
-        "_id": "5a7833d5afe5871e2059cab1",
-        "firstName": "Ivory",
-        "lastName": "Langosh",
-        "awards": 1
+        "_id": "5a7833d5afe5871e2059cad4",
+        "firstName": "Watson",
+        "lastName": "Eichmann",
+        "awards": 2
     }
 ]
 ```
 
-### ✔ f) Yellow / red yellow / red cards – player (till date)
+### ✔ f) Yellow / red yellow / red cards – player (till date) (53 ms)
 
 ```json
 [
     {
         "_id": {
-            "Player": "Alonso Olana",
+            "firstName": "Xabier ",
+            "lastName": "Alonso Olana",
             "Cards": "Yellow Red Card"
         },
         "count": 1
     },
     {
         "_id": {
-            "Player": "Alonso Olana",
+            "firstName": "Xabier ",
+            "lastName": "Alonso Olana",
             "Cards": "Yellow Card"
         },
         "count": 12
@@ -680,7 +208,7 @@
 ]
 ```
 
-### ✔ g) Stats – club (last five matches)
+### ✔ g) Stats – club (last five matches) (235 ms)
 
 ```json
 [
@@ -688,151 +216,151 @@
         "_id": "5a7833d9afe5871e205a7805",
         "startDate": "2018-01-27T14:30:00.000Z",
         "game_id": "5a7833d9afe5871e205a7805",
-        "relevantTeam": "5a7833cbafe5871e2059ca8a",
+        "relevantTeam": "5a7833cbafe5871e2059ca88",
         "homeTeam": "5a7833cbafe5871e2059ca88",
         "awayTeam": "5a7833cbafe5871e2059ca8a",
         "gameStat": [
             {
-                "_id": "5a7833d9afe5871e205a9a5d",
+                "_id": "5a7833d9afe5871e205a9a5e",
                 "type": "statistic",
                 "gameId": "5a7833d9afe5871e205a7805",
-                "teamId": "5a7833cbafe5871e2059ca8a",
-                "possession": 55,
+                "teamId": "5a7833cbafe5871e2059ca88",
+                "possession": 45,
+                "shots": 12,
+                "shotsOnGoal": 6,
+                "crosses": 17,
+                "tacklesWon": 8,
+                "interceptions": 29,
+                "fouls": 14,
+                "fouled": 18,
+                "offsides": 1,
+                "passes": 514,
+                "passesCompleted": 402,
+                "blockedShots": 1,
+                "touches": 712
+            }
+        ]
+    },
+    {
+        "_id": "5a7833d9afe5871e205a77ff",
+        "startDate": "2018-01-20T17:30:00.000Z",
+        "game_id": "5a7833d9afe5871e205a77ff",
+        "relevantTeam": "5a7833cbafe5871e2059ca88",
+        "homeTeam": "5a7833cbafe5871e2059ca8d",
+        "awayTeam": "5a7833cbafe5871e2059ca88",
+        "gameStat": [
+            {
+                "_id": "5a7833d9afe5871e205a9979",
+                "type": "statistic",
+                "gameId": "5a7833d9afe5871e205a77ff",
+                "teamId": "5a7833cbafe5871e2059ca88",
+                "possession": 58,
+                "shots": 10,
+                "shotsOnGoal": 2,
+                "crosses": 12,
+                "tacklesWon": 11,
+                "interceptions": 26,
+                "fouls": 16,
+                "fouled": 24,
+                "offsides": 2,
+                "passes": 388,
+                "passesCompleted": 266,
+                "blockedShots": 2,
+                "touches": 647
+            }
+        ]
+    },
+    {
+        "_id": "5a7833d9afe5871e205a77f3",
+        "startDate": "2018-01-14T14:30:00.000Z",
+        "game_id": "5a7833d9afe5871e205a77f3",
+        "relevantTeam": "5a7833cbafe5871e2059ca88",
+        "homeTeam": "5a7833cbafe5871e2059ca88",
+        "awayTeam": "5a7833cbafe5871e2059ca89",
+        "gameStat": [
+            {
+                "_id": "5a7833d9afe5871e205a97af",
+                "type": "statistic",
+                "gameId": "5a7833d9afe5871e205a77f3",
+                "teamId": "5a7833cbafe5871e2059ca88",
+                "possession": 30,
                 "shots": 12,
                 "shotsOnGoal": 3,
-                "crosses": 35,
-                "tacklesWon": 19,
-                "interceptions": 25,
-                "fouls": 18,
-                "fouled": 14,
-                "offsides": 0,
-                "passes": 451,
-                "passesCompleted": 347,
-                "blockedShots": 5,
-                "touches": 669
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d9afe5871e205a7800",
-        "startDate": "2018-01-20T14:30:00.000Z",
-        "game_id": "5a7833d9afe5871e205a7800",
-        "relevantTeam": "5a7833cbafe5871e2059ca8a",
-        "homeTeam": "5a7833cbafe5871e2059ca89",
-        "awayTeam": "5a7833cbafe5871e2059ca8a",
-        "gameStat": [
-            {
-                "_id": "5a7833d9afe5871e205a999f",
-                "type": "statistic",
-                "gameId": "5a7833d9afe5871e205a7800",
-                "teamId": "5a7833cbafe5871e2059ca8a",
-                "possession": 57,
-                "shots": 21,
-                "shotsOnGoal": 3,
-                "crosses": 39,
-                "tacklesWon": 20,
-                "interceptions": 28,
-                "fouls": 12,
-                "fouled": 10,
-                "offsides": 1,
-                "passes": 493,
-                "passesCompleted": 392,
-                "blockedShots": 7,
-                "touches": 765
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d9afe5871e205a77f9",
-        "startDate": "2018-01-13T14:30:00.000Z",
-        "game_id": "5a7833d9afe5871e205a77f9",
-        "relevantTeam": "5a7833cbafe5871e2059ca8a",
-        "homeTeam": "5a7833cbafe5871e2059ca8a",
-        "awayTeam": "5a7833cbafe5871e2059ca8d",
-        "gameStat": [
-            {
-                "_id": "5a7833d9afe5871e205a9896",
-                "type": "statistic",
-                "gameId": "5a7833d9afe5871e205a77f9",
-                "teamId": "5a7833cbafe5871e2059ca8a",
-                "possession": 32,
-                "shots": 18,
-                "shotsOnGoal": 6,
-                "crosses": 21,
-                "tacklesWon": 18,
-                "interceptions": 20,
-                "fouls": 6,
-                "fouled": 15,
-                "offsides": 7,
-                "passes": 446,
-                "passesCompleted": 302,
-                "blockedShots": 6,
-                "touches": 735
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d9afe5871e205a77ea",
-        "startDate": "2017-12-16T14:30:00.000Z",
-        "game_id": "5a7833d9afe5871e205a77ea",
-        "relevantTeam": "5a7833cbafe5871e2059ca8a",
-        "homeTeam": "5a7833cbafe5871e2059ca8a",
-        "awayTeam": "5a7833cbafe5871e2059ca8f",
-        "gameStat": [
-            {
-                "_id": "5a7833d9afe5871e205a9655",
-                "type": "statistic",
-                "gameId": "5a7833d9afe5871e205a77ea",
-                "teamId": "5a7833cbafe5871e2059ca8a",
-                "possession": 32,
-                "shots": 19,
-                "shotsOnGoal": 9,
-                "crosses": 42,
-                "tacklesWon": 16,
-                "interceptions": 23,
-                "fouls": 9,
+                "crosses": 20,
+                "tacklesWon": 12,
+                "interceptions": 27,
+                "fouls": 20,
                 "fouled": 16,
-                "offsides": 1,
-                "passes": 556,
-                "passesCompleted": 416,
-                "blockedShots": 3,
-                "touches": 799
+                "offsides": 2,
+                "passes": 418,
+                "passesCompleted": 307,
+                "blockedShots": 2,
+                "touches": 622
             }
         ]
     },
     {
-        "_id": "5a7833d9afe5871e205a77dd",
-        "startDate": "2017-12-13T19:30:00.000Z",
-        "game_id": "5a7833d9afe5871e205a77dd",
-        "relevantTeam": "5a7833cbafe5871e2059ca8a",
-        "homeTeam": "5a7833cbafe5871e2059ca8c",
-        "awayTeam": "5a7833cbafe5871e2059ca8a",
+        "_id": "5a7833d9afe5871e205a77e5",
+        "startDate": "2017-12-16T14:30:00.000Z",
+        "game_id": "5a7833d9afe5871e205a77e5",
+        "relevantTeam": "5a7833cbafe5871e2059ca88",
+        "homeTeam": "5a7833cbafe5871e2059ca88",
+        "awayTeam": "5a7833cbafe5871e2059ca9b",
         "gameStat": [
             {
-                "_id": "5a7833d9afe5871e205a9463",
+                "_id": "5a7833d9afe5871e205a9596",
                 "type": "statistic",
-                "gameId": "5a7833d9afe5871e205a77dd",
-                "teamId": "5a7833cbafe5871e2059ca8a",
-                "possession": 58,
-                "shots": 17,
+                "gameId": "5a7833d9afe5871e205a77e5",
+                "teamId": "5a7833cbafe5871e2059ca88",
+                "possession": 38,
+                "shots": 20,
                 "shotsOnGoal": 8,
-                "crosses": 25,
-                "tacklesWon": 16,
-                "interceptions": 30,
-                "fouls": 19,
-                "fouled": 12,
-                "offsides": 1,
-                "passes": 423,
-                "passesCompleted": 333,
-                "blockedShots": 5,
-                "touches": 649
+                "crosses": 17,
+                "tacklesWon": 21,
+                "interceptions": 15,
+                "fouls": 9,
+                "fouled": 15,
+                "offsides": 2,
+                "passes": 424,
+                "passesCompleted": 337,
+                "blockedShots": 3,
+                "touches": 628
+            }
+        ]
+    },
+    {
+        "_id": "5a7833d9afe5871e205a77df",
+        "startDate": "2017-12-13T19:30:00.000Z",
+        "game_id": "5a7833d9afe5871e205a77df",
+        "relevantTeam": "5a7833cbafe5871e2059ca88",
+        "homeTeam": "5a7833cbafe5871e2059ca8b",
+        "awayTeam": "5a7833cbafe5871e2059ca88",
+        "gameStat": [
+            {
+                "_id": "5a7833d9afe5871e205a94af",
+                "type": "statistic",
+                "gameId": "5a7833d9afe5871e205a77df",
+                "teamId": "5a7833cbafe5871e2059ca88",
+                "possession": 51,
+                "shots": 8,
+                "shotsOnGoal": 1,
+                "crosses": 5,
+                "tacklesWon": 17,
+                "interceptions": 23,
+                "fouls": 15,
+                "fouled": 9,
+                "offsides": 0,
+                "passes": 196,
+                "passesCompleted": 118,
+                "blockedShots": 2,
+                "touches": 413
             }
         ]
     }
 ]
 ```
 
-### ✔ h) Most assists – player (till date)
+### ✔ h) Most assists – player (till date) (16 ms)
 
 ```json
 [
@@ -849,137 +377,105 @@
                 "dateOfBirth": "1989-09-13T00:00:00.000Z"
             }
         ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cea9",
-        "count": 19,
-        "Player": [
-            {
-                "_id": "5a7833d5afe5871e2059cea9",
-                "type": "person",
-                "firstName": "Emil",
-                "lastName": "Forsberg",
-                "nationality": "Sweden",
-                "dateOfBirth": "1991-10-23T00:00:00.000Z"
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059ccf7",
-        "count": 17,
-        "Player": [
-            {
-                "_id": "5a7833d5afe5871e2059ccf7",
-                "type": "person",
-                "firstName": "Zlatko",
-                "lastName": "Junuzović",
-                "nationality": "Austria",
-                "dateOfBirth": "1987-09-26T00:00:00.000Z"
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cd65",
-        "count": 17,
-        "Player": [
-            {
-                "_id": "5a7833d5afe5871e2059cd65",
-                "type": "person",
-                "firstName": "Max",
-                "lastName": "Kruse",
-                "nationality": "Germany",
-                "dateOfBirth": "1988-03-19T00:00:00.000Z"
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cbc1",
-        "count": 16,
-        "Player": [
-            {
-                "_id": "5a7833d5afe5871e2059cbc1",
-                "type": "person",
-                "firstName": "Lars",
-                "lastName": "Stindl",
-                "nationality": "Germany",
-                "dateOfBirth": "1988-08-26T00:00:00.000Z"
-            }
-        ]
     }
 ]
 ```
 
-### ✔ i) Average possession kept – clubs
+### ✔ i) Average possession kept – clubs (49 ms)
 
 ```json
 [
     {
-        "_id": "5a7833cbafe5871e2059ca8b",
-        "name": "FC Bayern München",
-        "poss": 51.36363636363637
+        "_id": "5a7833cbafe5871e2059ca88",
+        "name": "1. FC Köln",
+        "poss": 50.01136363636363
     }
 ]
 ```
 
-### ✔ j) Number of minutes played – player (till date)
+### ✔ j) Number of minutes played – player (till date) (52 ms)
 
 ```json
 [
     {
-        "_id": "5a7833d5afe5871e2059cc2b",
-        "firstName": "Jérôme",
-        "lastName": "Boateng",
-        "dateOfBirth": "1988-09-03T00:00:00.000Z",
-        "minutes": 3632
+        "_id": "5a7833d5afe5871e2059cc89",
+        "firstName": "Lewis",
+        "lastName": "Holtby",
+        "dateOfBirth": "1990-09-18T00:00:00.000Z",
+        "minutes": 6553
     }
 ]
 ```
 
-### ✔ k) Man of the match – player (till date)
+### ✔ k) Man of the match – player (till date) (13 ms)
 
 ```json
 [
     {
-        "_id": "5a7833d5afe5871e2059cb85",
-        "firstName": "Paweł",
-        "lastName": "Olkowski",
-        "awardsWon": 4
+        "_id": "5a7833d5afe5871e2059cc32",
+        "firstName": "Thomas",
+        "lastName": "Müller",
+        "awardsWon": 5
     }
 ]
 ```
 
-### ✔ l) All positions played – player (season possibility check)
+### ✔ l) All positions played – player (season possibility check) (1.55 s)
 
 ```json
 [
     {
         "_id": {
-            "player": "5a7833d5afe5871e2059cc50",
-            "firstName": "Lukas",
-            "lastName": "Hinterseer",
-            "position": "Centre Forward"
+            "player": "5a7833d5afe5871e2059cc39",
+            "firstName": "Mehdi Amine",
+            "lastName": "El Mouttaqi Benatia",
+            "position": "Left Back"
         }
     },
     {
         "_id": {
-            "player": "5a7833d5afe5871e2059cc50",
-            "firstName": "Lukas",
-            "lastName": "Hinterseer",
-            "position": "Withdrawn Striker"
+            "player": "5a7833d5afe5871e2059cc39",
+            "firstName": "Mehdi Amine",
+            "lastName": "El Mouttaqi Benatia",
+            "position": "Right Wing Back"
+        }
+    },
+    {
+        "_id": {
+            "player": "5a7833d5afe5871e2059cc39",
+            "firstName": "Mehdi Amine",
+            "lastName": "El Mouttaqi Benatia",
+            "position": "Centre Back"
+        }
+    },
+    {
+        "_id": {
+            "player": "5a7833d5afe5871e2059cc39",
+            "firstName": "Mehdi Amine",
+            "lastName": "El Mouttaqi Benatia",
+            "position": "Right Back"
+        }
+    },
+    {
+        "_id": {
+            "player": "5a7833d5afe5871e2059cc39",
+            "firstName": "Mehdi Amine",
+            "lastName": "El Mouttaqi Benatia",
+            "position": "Left Wing Back"
         }
     }
 ]
 ```
 
-### ✔ m) Football-agent maximum number of represented player – Football-agent (given league)
+### ✔ m) Football-agent maximum number of represented player – Football-agent (given league) (4.51 s)
 
 ```json
 [
     {
         "_id": "5a7833d5afe5871e2059d042",
-        "competition": "5a7833cbafe5871e2059ca85",
+        "competition": null,
         "season": "2017/2018",
-        "count": 210,
+        "count": 70,
         "Agent": [
             {
                 "_id": "5a7833d5afe5871e2059d042",
@@ -989,96 +485,51 @@
                 "dateOfBirth": "1969-01-22T10:37:09.531Z"
             }
         ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059d03c",
-        "competition": "5a7833cbafe5871e2059ca85",
-        "season": "2017/2018",
-        "count": 207,
-        "Agent": [
-            {
-                "_id": "5a7833d5afe5871e2059d03c",
-                "firstName": "Zelda",
-                "lastName": "Shanahan",
-                "nationality": "Argentina",
-                "dateOfBirth": "1970-10-01T10:37:09.531Z"
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059d041",
-        "competition": "5a7833cbafe5871e2059ca85",
-        "season": "2017/2018",
-        "count": 204,
-        "Agent": [
-            {
-                "_id": "5a7833d5afe5871e2059d041",
-                "firstName": "Francisca",
-                "lastName": "Walker",
-                "nationality": "Jamaica",
-                "dateOfBirth": "1959-12-27T10:37:09.531Z"
-            }
-        ]
-    },
-    {
-        "_id": "5a7833d5afe5871e2059d03d",
-        "competition": "5a7833cbafe5871e2059ca85",
-        "season": "2017/2018",
-        "count": 195,
-        "Agent": [
-            {
-                "_id": "5a7833d5afe5871e2059d03d",
-                "firstName": "Kim",
-                "lastName": "Dickinson",
-                "nationality": "Argentina",
-                "dateOfBirth": "1965-04-29T10:37:09.531Z"
-            }
-        ]
     }
 ]
 ```
 
-### ✔ n) Best / worst team – club (week --> performance metrics)
+### ✔ n) Best / worst team – club (week --> performance metrics) (456 ms)
 
 ```json
 [
     {
         "_id": null,
         "best": {
-            "_id": "5a7833cbafe5871e2059ca8c",
-            "Team": ["FC Schalke 04"],
-            "Country": ["Germany"],
-            "Goals": 1,
-            "PenaltyGoals": 1,
-            "OwnGoals": 0,
-            "AveragePossession": 59,
-            "shotsOnGoal": 8,
-            "games": 1,
-            "passes": 420,
-            "passesCompleted": 336,
-            "blockedShots": 6,
-            "score": 34
-        },
-        "worst": {
-            "_id": "5a7833cbafe5871e2059ca9a",
-            "Team": ["VfB Stuttgart"],
+            "_id": "5a7833cbafe5871e2059ca94",
+            "Team": ["BV Borussia 09 Dortmund"],
             "Country": ["Germany"],
             "Goals": 0,
             "PenaltyGoals": 0,
             "OwnGoals": 0,
-            "AveragePossession": 41,
-            "shotsOnGoal": 2,
+            "AveragePossession": 56,
+            "shotsOnGoal": 3,
             "games": 1,
-            "passes": 704,
-            "passesCompleted": 610,
-            "blockedShots": 2,
-            "score": 15.166477272727272
+            "passes": 979,
+            "passesCompleted": 890,
+            "blockedShots": 14,
+            "score": 31.70909090909091
+        },
+        "worst": {
+            "_id": "5a7833cbafe5871e2059ca89",
+            "Team": ["Borussia Mönchengladbach"],
+            "Country": ["Germany"],
+            "Goals": 0,
+            "PenaltyGoals": 0,
+            "OwnGoals": 0,
+            "AveragePossession": 31,
+            "shotsOnGoal": 3,
+            "games": 1,
+            "passes": 630,
+            "passesCompleted": 530,
+            "blockedShots": 3,
+            "score": 13.14126984126984
         }
     }
 ]
 ```
 
-### ✔ o) Signing a striker for the best fitting - club (all stats)
+### ✔ o) Signing a striker for the best fitting - club (all stats) (3 s)
 
 ```json
 [
@@ -1094,9 +545,9 @@
         "minutes": 9,
         "games": 1,
         "goals": 1,
-        "penatlyGoals": 0,
+        "penaltyGoals": 0,
         "minutespergoal": 9,
-        "minutespergame": 0.1111111111111111,
+        "minutespergame": 9,
         "score": 4
     },
     {
@@ -1111,27 +562,10 @@
         "minutes": 101,
         "games": 1,
         "goals": 2,
-        "penatlyGoals": 0,
+        "penaltyGoals": 0,
         "minutespergoal": 50.5,
-        "minutespergame": 0.009900990099009901,
+        "minutespergame": 101,
         "score": 3.6666666666666665
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cbd9",
-        "FirstName": ["Shinji"],
-        "LastName": ["Kagawa"],
-        "shots": 2,
-        "shotsOnGoal": 1,
-        "tacklesWon": 2,
-        "offsides": 1,
-        "touches": 73,
-        "minutes": 101,
-        "games": 1,
-        "goals": 1,
-        "penatlyGoals": 0,
-        "minutespergoal": 101,
-        "minutespergame": 0.009900990099009901,
-        "score": 3.5
     },
     {
         "_id": "5a7833d5afe5871e2059cd2f",
@@ -1145,44 +579,27 @@
         "minutes": 101,
         "games": 1,
         "goals": 1,
-        "penatlyGoals": 0,
+        "penaltyGoals": 0,
         "minutespergoal": 101,
-        "minutespergame": 0.009900990099009901,
+        "minutespergame": 101,
         "score": 3.5
     },
     {
-        "_id": "5a7833d5afe5871e2059ccf1",
-        "FirstName": ["Sandro"],
-        "LastName": ["Wagner"],
-        "shots": 1,
+        "_id": "5a7833d5afe5871e2059cbd9",
+        "FirstName": ["Shinji"],
+        "LastName": ["Kagawa"],
+        "shots": 2,
         "shotsOnGoal": 1,
-        "tacklesWon": 1,
-        "offsides": 0,
-        "touches": 6,
-        "minutes": 6,
+        "tacklesWon": 2,
+        "offsides": 1,
+        "touches": 73,
+        "minutes": 101,
         "games": 1,
         "goals": 1,
-        "penatlyGoals": 0,
-        "minutespergoal": 6,
-        "minutespergame": 0.16666666666666666,
-        "score": 3
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cf6f",
-        "FirstName": ["Ishak Lazreg Cherif"],
-        "LastName": ["Belfodil"],
-        "shots": 2,
-        "shotsOnGoal": 2,
-        "tacklesWon": 0,
-        "offsides": 1,
-        "touches": 9,
-        "minutes": 11,
-        "games": 1,
-        "goals": 0,
-        "penatlyGoals": 0,
-        "minutespergoal": 0,
-        "minutespergame": 0.09090909090909091,
-        "score": 3
+        "penaltyGoals": 0,
+        "minutespergoal": 101,
+        "minutespergame": 101,
+        "score": 3.5
     },
     {
         "_id": "5a7833d5afe5871e2059cde2",
@@ -1196,70 +613,105 @@
         "minutes": 91,
         "games": 1,
         "goals": 1,
-        "penatlyGoals": 0,
+        "penaltyGoals": 0,
         "minutespergoal": 91,
-        "minutespergame": 0.01098901098901099,
+        "minutespergame": 91,
         "score": 3
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cc36",
-        "FirstName": ["Robert"],
-        "LastName": ["Lewandowski"],
-        "shots": 6,
-        "shotsOnGoal": 1,
-        "tacklesWon": 0,
-        "offsides": 2,
-        "touches": 47,
-        "minutes": 101,
-        "games": 1,
-        "goals": 1,
-        "penatlyGoals": 0,
-        "minutespergoal": 101,
-        "minutespergame": 0.009900990099009901,
-        "score": 2.6666666666666665
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cf04",
-        "FirstName": ["Leon"],
-        "LastName": ["Bailey Butler"],
-        "shots": 3,
-        "shotsOnGoal": 1,
-        "tacklesWon": 1,
-        "offsides": 0,
-        "touches": 81,
-        "minutes": 101,
-        "games": 1,
-        "goals": 1,
-        "penatlyGoals": 0,
-        "minutespergoal": 101,
-        "minutespergame": 0.009900990099009901,
-        "score": 2.3333333333333335
-    },
-    {
-        "_id": "5a7833d5afe5871e2059cc14",
-        "FirstName": ["Caiuby Francisco"],
-        "LastName": ["da Silva"],
-        "shots": 5,
-        "shotsOnGoal": 1,
-        "tacklesWon": 1,
-        "offsides": 0,
-        "touches": 55,
-        "minutes": 101,
-        "games": 1,
-        "goals": 1,
-        "penatlyGoals": 0,
-        "minutespergoal": 101,
-        "minutespergame": 0.009900990099009901,
-        "score": 2.2
     }
 ]
 ```
 
-### ⚠ uc 1) Use Case 1 is empty, skipping ...
+### ✔ uc 1) Most goals from a striker (3.51 s)
 
-### ⚠ uc 2) Use Case 2 is empty, skipping ...
+```json
+[
+    {
+        "_id": "5a7833d8afe5871e205a751d",
+        "goals": 2,
+        "player": [
+            {
+                "firstName": "Pierre-Emerick Emiliano François",
+                "lastName": "Aubameyang",
+                "nationality": "Gabon"
+            }
+        ]
+    }
+]
+```
 
-### ✔ uc 3) Use Case 3
+### ✔ uc 2) Top 5 fouling player (38 ms)
+
+```json
+[
+    {
+        "games": 15,
+        "fouls": 4.714285714285714,
+        "player": [
+            {
+                "_id": "5a7833d5afe5871e2059cf6f",
+                "firstName": "Ishak Lazreg Cherif",
+                "lastName": "Belfodil",
+                "nationality": "Algeria",
+                "dateOfBirth": "1992-01-15T00:00:00.000Z"
+            }
+        ]
+    },
+    {
+        "games": 8,
+        "fouls": 4.690553745928339,
+        "player": [
+            {
+                "_id": "5a7833d5afe5871e2059cb78",
+                "firstName": "Emil",
+                "lastName": "Berggreen",
+                "nationality": "Denmark",
+                "dateOfBirth": "1993-05-10T00:00:00.000Z"
+            }
+        ]
+    },
+    {
+        "games": 6,
+        "fouls": 4.565217391304348,
+        "player": [
+            {
+                "_id": "5a7833d5afe5871e2059cecd",
+                "firstName": "Karim",
+                "lastName": "Guédé",
+                "nationality": "Slovakia",
+                "dateOfBirth": "1985-01-07T00:00:00.000Z"
+            }
+        ]
+    },
+    {
+        "games": 8,
+        "fouls": 4.5,
+        "player": [
+            {
+                "_id": "5a7833d5afe5871e2059cd08",
+                "firstName": "Lukas",
+                "lastName": "Fröde",
+                "nationality": "Germany",
+                "dateOfBirth": "1995-01-23T00:00:00.000Z"
+            }
+        ]
+    },
+    {
+        "games": 7,
+        "fouls": 3.7380191693290734,
+        "player": [
+            {
+                "_id": "5a7833d5afe5871e2059cc9c",
+                "firstName": "Nabil",
+                "lastName": "Bahoui",
+                "nationality": "Sweden",
+                "dateOfBirth": "1991-02-05T00:00:00.000Z"
+            }
+        ]
+    }
+]
+```
+
+### ✔ uc 3) Club statistics (113 ms)
 
 ```json
 [
@@ -1296,146 +748,116 @@
 ]
 ```
 
-### ✔ uc 4) Use Case 4
+### ✔ uc 4) Player information (116 ms)
 
 ```json
 [
     {
-        "_id": "5a7833d5afe5871e2059cc60",
-        "firstName": "Ralf",
-        "lastName": "Fährmann",
+        "_id": "5a7833d5afe5871e2059cc32",
+        "firstName": "Thomas",
+        "lastName": "Müller",
         "nationality": "Germany",
-        "dateOfBirth": "1988-09-27T00:00:00.000Z",
+        "dateOfBirth": "1989-09-13T00:00:00.000Z",
         "currentContract": [
             {
-                "club": ["FC Schalke 04"],
+                "club": ["FC Bayern München"],
                 "country": ["Germany"],
-                "city": ["Gelsenkirchen"],
-                "salary": 41000000
+                "city": ["München"],
+                "salary": 42000000
             }
         ],
-        "yellowCards": 5,
+        "yellowCards": 7,
         "yellowRedCards": 0,
         "redCards": 0,
-        "goals": 0,
-        "totalGames": 88
+        "goals": 29,
+        "totalGames": 76
     }
 ]
 ```
 
-### ✔ uc 5) Use Case 5
+### ✔ uc 5) Top 10 yellow cards (111 ms)
 
 ```json
 [
     {
-        "count": 227,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Eintracht Frankfurt",
-                "country": "Germany",
-                "city": "Frankfurt am Main"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca95",
+            "team": ["Eintracht Frankfurt"],
+            "eventType": "Yellow Card"
+        },
+        "count": 227
     },
     {
-        "count": 186,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Augsburg",
-                "country": "Germany",
-                "city": "Augsburg"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca8d",
+            "team": ["Hamburger SV"],
+            "eventType": "Yellow Card"
+        },
+        "count": 186
     },
     {
-        "count": 186,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Hamburger SV",
-                "country": "Germany",
-                "city": "Hamburg"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca8a",
+            "team": ["FC Augsburg"],
+            "eventType": "Yellow Card"
+        },
+        "count": 186
     },
     {
-        "count": 177,
-        "team": [
-            {
-                "type": "Club",
-                "name": "SV Werder Bremen",
-                "country": "Germany",
-                "city": "Bremen"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca90",
+            "team": ["SV Werder Bremen"],
+            "eventType": "Yellow Card"
+        },
+        "count": 177
     },
     {
-        "count": 177,
-        "team": [
-            {
-                "type": "Club",
-                "name": "FC Schalke 04",
-                "country": "Germany",
-                "city": "Gelsenkirchen"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca8c",
+            "team": ["FC Schalke 04"],
+            "eventType": "Yellow Card"
+        },
+        "count": 177
     },
     {
-        "count": 169,
-        "team": [
-            {
-                "type": "Club",
-                "name": "1. FC Köln",
-                "country": "Germany",
-                "city": "Köln"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca88",
+            "team": ["1. FC Köln"],
+            "eventType": "Yellow Card"
+        },
+        "count": 169
     },
     {
-        "count": 168,
-        "team": [
-            {
-                "type": "Club",
-                "name": "TSG 1899 Hoffenheim",
-                "country": "Germany",
-                "city": "Zuzenhausen"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca91",
+            "team": ["TSG 1899 Hoffenheim"],
+            "eventType": "Yellow Card"
+        },
+        "count": 168
     },
     {
-        "count": 167,
-        "team": [
-            {
-                "type": "Club",
-                "name": "Hertha BSC",
-                "country": "Germany",
-                "city": "Berlin"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca98",
+            "team": ["Hertha BSC"],
+            "eventType": "Yellow Card"
+        },
+        "count": 167
     },
     {
-        "count": 161,
-        "team": [
-            {
-                "type": "Club",
-                "name": "1. FSV Mainz 05",
-                "country": "Germany",
-                "city": "Mainz"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca92",
+            "team": ["1. FSV Mainz 05"],
+            "eventType": "Yellow Card"
+        },
+        "count": 161
     },
     {
-        "count": 159,
-        "team": [
-            {
-                "type": "Club",
-                "name": "SV Darmstadt 98",
-                "country": "Germany",
-                "city": "Darmstadt"
-            }
-        ]
+        "_id": {
+            "teamId": "5a7833cbafe5871e2059ca99",
+            "team": ["SV Darmstadt 98"],
+            "eventType": "Yellow Card"
+        },
+        "count": 159
     }
 ]
 ```

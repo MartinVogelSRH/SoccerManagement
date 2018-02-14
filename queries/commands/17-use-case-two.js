@@ -6,20 +6,24 @@ module.exports = {
         {
             $match: {
                 type: 'statistic',
-                started: true
+                playerId: { $exists: true },
+                minutes: { $gt: 0 }
             }
         },
         {
             $group: {
                 _id: '$playerId',
+                games: { $sum: 1 },
                 fouls: { $sum: '$fouls' },
-                games: { $sum: 1 }
+                minutes: { $sum: '$minutes' }
             }
         },
+        { $match: { games: { $gte: 5 } } },
         {
             $project: {
                 playerId: '$_id',
-                fouls: { $divide: ['$fouls', '$games'] }
+                games: 1,
+                fouls: { $multiply: [{ $divide: ['$fouls', '$minutes'] }, 90] }
             }
         },
         {
@@ -38,12 +42,10 @@ module.exports = {
             $project: {
                 _id: 0,
                 playerId: 0,
-                'player._id': 0,
+                // 'player._id': 0,
                 'player.type': 0
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

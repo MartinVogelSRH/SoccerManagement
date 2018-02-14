@@ -5,8 +5,8 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                firstName: 'Jérôme',
-                lastName: 'Boateng'
+                firstName: 'Lewis',
+                lastName: 'Holtby'
             }
         },
         {
@@ -32,11 +32,6 @@ module.exports = {
                                 ]
                             }
                         }
-                    },
-                    {
-                        $project: {
-                            fantasy: 0
-                        }
                     }
                 ],
                 as: 'stats'
@@ -52,7 +47,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

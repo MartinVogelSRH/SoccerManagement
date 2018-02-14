@@ -1,14 +1,14 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
+const { ISODate } = require('./utils');
 
 module.exports = {
     aggregate: 'people',
     pipeline: [
         {
             $match: {
-                firstName: 'Ralf',
-                lastName: 'Fährmann'
+                firstName: 'Thomas',
+                lastName: 'Müller'
             }
         },
         {
@@ -157,7 +157,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

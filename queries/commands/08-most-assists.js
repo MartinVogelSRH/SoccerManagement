@@ -14,7 +14,9 @@ module.exports = {
         {
             $sortByCount: '$additionalPlayerId'
         },
-        { $limit: 5 },
+        {
+            $limit: 1
+        },
         {
             $lookup: {
                 from: 'people',
@@ -24,7 +26,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

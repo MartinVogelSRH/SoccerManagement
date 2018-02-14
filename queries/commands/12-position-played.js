@@ -1,24 +1,20 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
+const { ISODate } = require('./utils');
 
 module.exports = {
     aggregate: 'people',
     pipeline: [
         {
             $match: {
-                firstName: 'Lukas',
-                lastName: 'Hinterseer'
+                firstName: 'Mehdi Amine',
+                lastName: 'El Mouttaqi Benatia'
             }
         },
         {
             $lookup: {
                 from: 'people',
-                let: {
-                    player: '$_id',
-                    firstName: '$firstName',
-                    lastName: '$lastName'
-                },
+                let: { player: '$_id', firstName: '$firstName', lastName: '$lastName' },
                 pipeline: [
                     {
                         $match: {
@@ -74,16 +70,10 @@ module.exports = {
                                         ]
                                     },
                                     {
-                                        $gte: [
-                                            '$startDate',
-                                            ISODate('2016-06-13 00:00:00.000')
-                                        ]
+                                        $gte: ['$startDate', ISODate('2016-06-13 00:00:00.000')]
                                     },
                                     {
-                                        $lte: [
-                                            '$startDate',
-                                            ISODate('2017-06-13 00:00:00.000')
-                                        ]
+                                        $lte: ['$startDate', ISODate('2017-06-13 00:00:00.000')]
                                     }
                                 ]
                             }
@@ -157,7 +147,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 10
-    }
+    cursor: {}
 };

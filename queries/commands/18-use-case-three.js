@@ -23,16 +23,10 @@ module.exports = {
                                     { $eq: ['$contractType', 'player'] },
                                     { $eq: ['$teamId', '$$team_id'] },
                                     {
-                                        $lt: [
-                                            '$startDate',
-                                            ISODate('2018-02-04T16:02:01.718Z')
-                                        ]
+                                        $lt: ['$startDate', ISODate('2018-02-04T16:02:01.718Z')]
                                     },
                                     {
-                                        $gt: [
-                                            '$endDate',
-                                            ISODate('2018-02-04T16:02:01.718Z')
-                                        ]
+                                        $gt: ['$endDate', ISODate('2018-02-04T16:02:01.718Z')]
                                     }
                                 ]
                             }
@@ -126,10 +120,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Substitution'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Substitution']
                                             },
                                             1,
                                             0
@@ -143,10 +134,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Goal'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Goal']
                                             },
                                             1,
                                             0
@@ -160,10 +148,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Penalty Goal'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Penalty Goal']
                                             },
                                             1,
                                             0
@@ -177,10 +162,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Yellow Card'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Yellow Card']
                                             },
                                             1,
                                             0
@@ -194,10 +176,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Yellow Red Card'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Yellow Red Card']
                                             },
                                             1,
                                             0
@@ -211,10 +190,7 @@ module.exports = {
                                     {
                                         $cond: [
                                             {
-                                                $eq: [
-                                                    '$$this.eventType',
-                                                    'Red Card'
-                                                ]
+                                                $eq: ['$$this.eventType', 'Red Card']
                                             },
                                             1,
                                             0
@@ -228,7 +204,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

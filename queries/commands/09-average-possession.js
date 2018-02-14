@@ -5,7 +5,7 @@ module.exports = {
     pipeline: [
         {
             $match: {
-                name: 'FC Bayern München'
+                name: '1. FC Köln'
             }
         },
         {
@@ -28,12 +28,7 @@ module.exports = {
                                     },
                                     {
                                         $eq: [
-                                            {
-                                                $ifNull: [
-                                                    '$playerId',
-                                                    'Unspecified'
-                                                ]
-                                            },
+                                            { $ifNull: ['$playerId', 'Unspecified'] },
                                             'Unspecified'
                                         ]
                                     }
@@ -58,7 +53,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

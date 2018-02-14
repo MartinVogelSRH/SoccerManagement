@@ -11,35 +11,6 @@ module.exports = {
             }
         },
         {
-            $lookup: {
-                from: 'competitions',
-                let: { competition: '$_id', name: '$name' },
-                pipeline: [
-                    {
-                        $match: {
-                            $expr: {
-                                $eq: ['$name', '$$name']
-                            }
-                        }
-                    },
-                    {
-                        $project: {
-                            _id: 1,
-                            competition: '$$competition',
-                            name: '$$name',
-                            season: '$season',
-                            teams: '$teams',
-                            startDate: '$startDate',
-                            endDate: '$endDate'
-                        }
-                    }
-                ],
-                as: 'League'
-            }
-        },
-        { $unwind: '$League' },
-        { $replaceRoot: { newRoot: '$League' } },
-        {
             $sort: {
                 startDate: -1
             }
@@ -48,10 +19,6 @@ module.exports = {
             $limit: 1
         },
         { $unwind: '$teams' },
-
-        // {
-        // $limit: 1
-        // },
         {
             $lookup: {
                 from: 'people',
@@ -166,7 +133,7 @@ module.exports = {
             $sort: { count: -1 }
         },
         {
-            $limit: 4
+            $limit: 1
         },
         {
             $lookup: {
@@ -177,7 +144,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

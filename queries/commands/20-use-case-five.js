@@ -9,35 +9,25 @@ module.exports = {
             }
         },
         {
+            $lookup: {
+                from: 'teams',
+                localField: 'teamId',
+                foreignField: '_id',
+                as: 'Team'
+            }
+        },
+        {
             $group: {
-                _id: '$teamId',
+                _id: { teamId: '$teamId', team: '$Team.name', eventType: '$eventType' },
                 count: { $sum: 1 }
             }
         },
         {
             $sort: { count: -1 }
         },
-        { $limit: 10 },
         {
-            $lookup: {
-                from: 'teams',
-                localField: '_id',
-                foreignField: '_id',
-                as: 'team'
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                count: 1,
-                'team.type': 1,
-                'team.name': 1,
-                'team.city': 1,
-                'team.country': 1
-            }
+            $limit: 10
         }
     ],
-    cursor: {
-        batchSize: 10
-    }
+    cursor: {}
 };

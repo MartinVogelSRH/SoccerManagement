@@ -30,16 +30,10 @@ module.exports = {
                                         ]
                                     },
                                     {
-                                        $gte: [
-                                            '$startDate',
-                                            ISODate('2015-06-13 00:00:00.000')
-                                        ]
+                                        $gte: ['$startDate', ISODate('2017-08-01 00:00:00.000')]
                                     },
                                     {
-                                        $lte: [
-                                            '$startDate',
-                                            ISODate('2016-06-13 00:00:00.000')
-                                        ]
+                                        $lte: ['$startDate', ISODate('2018-08-01 00:00:00.000')]
                                     }
                                 ]
                             }
@@ -61,7 +55,7 @@ module.exports = {
         {
             $lookup: {
                 from: 'statistics',
-                let: { event: '$_id', team: '$team', name: '$name' },
+                let: { gameId: '$_id', team: '$team', name: '$name' },
                 pipeline: [
                     {
                         $match: {
@@ -70,26 +64,26 @@ module.exports = {
                                     {
                                         $and: [
                                             {
-                                                $eq: ['$gameId', '$$event']
+                                                $eq: ['$gameId', '$$gameId']
                                             },
                                             {
                                                 $eq: ['$teamId', '$$team']
                                             },
                                             {
-                                                $eq: ['$description', 'OwnGoal']
+                                                $eq: ['$eventType', 'OwnGoal']
                                             }
                                         ]
                                     },
                                     {
                                         $and: [
                                             {
-                                                $eq: ['$gameId', '$$event']
+                                                $eq: ['$gameId', '$$gameId']
                                             },
                                             {
                                                 $ne: ['$teamId', '$$team']
                                             },
                                             {
-                                                $eq: ['$description', 'Goal']
+                                                $eq: ['$eventType', 'Goal']
                                             }
                                         ]
                                     }
@@ -116,10 +110,8 @@ module.exports = {
             }
         },
         {
-            $group: { _id: { name: '$name' }, count: { $sum: 1 } }
+            $group: { _id: '$name', count: { $sum: 1 } }
         }
     ],
-    cursor: {
-        batchSize: 50
-    }
+    cursor: {}
 };

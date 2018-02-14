@@ -1,6 +1,6 @@
 'use strict';
 
-const { ObjectId, ISODate } = require('./utils');
+const { ISODate } = require('./utils');
 
 module.exports = {
     aggregate: 'games',
@@ -9,18 +9,8 @@ module.exports = {
             $match: {
                 $expr: {
                     $and: [
-                        {
-                            $gte: [
-                                '$startDate',
-                                ISODate('2018-01-22T00:00:00.166Z')
-                            ]
-                        },
-                        {
-                            $lte: [
-                                '$endDate',
-                                ISODate('2018-01-28T23:59:59.166Z')
-                            ]
-                        }
+                        { $gte: ['$startDate', ISODate('2017-09-04T00:00:00.166Z')] },
+                        { $lte: ['$endDate', ISODate('2017-09-10T23:59:59.166Z')] }
                     ]
                 }
             }
@@ -39,18 +29,8 @@ module.exports = {
                                         $or: [
                                             {
                                                 $and: [
-                                                    {
-                                                        $eq: [
-                                                            '$type',
-                                                            'statistic'
-                                                        ]
-                                                    },
-                                                    {
-                                                        $lte: [
-                                                            '$playerId',
-                                                            null
-                                                        ]
-                                                    }
+                                                    { $eq: ['$type', 'statistic'] },
+                                                    { $lte: ['$playerId', null] }
                                                 ]
                                             },
                                             { $eq: ['$type', 'event'] }
@@ -58,11 +38,6 @@ module.exports = {
                                     }
                                 ]
                             }
-                        }
-                    },
-                    {
-                        $project: {
-                            fantasy: 0
                         }
                     }
                 ],
@@ -144,12 +119,7 @@ module.exports = {
                                 {
                                     $cond: [
                                         { $gt: ['$passesCompleted', 0] },
-                                        {
-                                            $divide: [
-                                                '$passesCompleted',
-                                                '$passes'
-                                            ]
-                                        },
+                                        { $divide: ['$passesCompleted', '$passes'] },
                                         0
                                     ]
                                 }
@@ -171,7 +141,5 @@ module.exports = {
             }
         }
     ],
-    cursor: {
-        batchSize: 200
-    }
+    cursor: {}
 };
