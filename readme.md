@@ -26,4 +26,4 @@ Then you can run all queries by executing
 node queries
 ```
 
-You can also modify `queries/index.js` to just run some queries or copy the commands from the `queries/commands` folder and execude them in the mongo shell.
+You can also modify `queries/index.js` to just run some queries or copy the commands from the `queries/MongoShellQuery` folder and execude them in the mongo shell.
